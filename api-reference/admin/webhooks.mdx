@@ -50,7 +50,7 @@ curl -X GET 'https://{handle}.blutui.com/admin/api/webhooks' \
 
 ## Create webhook
 
-<api>POST https://{handle}.blutui.com/admin/api/webhooks</api>
+**`POST https://{handle}.blutui.com/admin/api/webhooks`**
 
 <ParamField body="url" type="string" required>
   The webhook endpoint to receive events.
@@ -91,7 +91,7 @@ curl -X POST 'https://{handle}.blutui.com/admin/api/webhooks' \
 
 ## Retrieve webhook
 
-<api>GET https://{handle}.blutui.com/admin/api/webhooks/{id}</api>
+**`GET https://{handle}.blutui.com/admin/api/webhooks/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the webhook to retrieve.
@@ -117,7 +117,7 @@ curl -X GET 'https://{handle}.blutui.com/admin/api/webhooks/webhook-id' \
 
 ## Update webhook
 
-<api>PATCH https://{handle}.blutui.com/admin/api/webhooks/{id}</api>
+**`PATCH https://{handle}.blutui.com/admin/api/webhooks/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the webhook to update.
@@ -156,7 +156,7 @@ curl -X PATCH 'https://{handle}.blutui.com/admin/api/webhooks/webhook-id' \
 
 ## Remove webhook
 
-<api>DELETE https://{handle}.blutui.com/admin/api/webhooks/{id}</api>
+**`DELETE https://{handle}.blutui.com/admin/api/webhooks/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the webhook to remove.

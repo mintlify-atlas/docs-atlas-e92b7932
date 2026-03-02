@@ -46,7 +46,7 @@ curl -X GET 'https://{handle}.blutui.com/admin/api/redirects' \
 
 ## Create redirect
 
-<api>POST https://{handle}.blutui.com/admin/api/redirects</api>
+**`POST https://{handle}.blutui.com/admin/api/redirects`**
 
 <ParamField body="from" type="string" required>
   The from url of the redirect.
@@ -83,7 +83,7 @@ curl -X POST 'https://{handle}.blutui.com/admin/api/redirects' \
 
 ## Retrieve redirect
 
-<api>GET https://{handle}.blutui.com/admin/api/redirects/{id}</api>
+**`GET https://{handle}.blutui.com/admin/api/redirects/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the redirect to retrieve.
@@ -109,7 +109,7 @@ curl -X GET 'https://{handle}.blutui.com/admin/api/redirects/redirect-id' \
 
 ## Update redirect
 
-<api>PATCH https://{handle}.blutui.com/admin/api/redirects/{id}</api>
+**`PATCH https://{handle}.blutui.com/admin/api/redirects/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the redirect to update.
@@ -148,7 +148,7 @@ curl -X PATCH 'https://{handle}.blutui.com/admin/api/redirects/redirect-id' \
 
 ## Remove redirect
 
-<api>DELETE https://{handle}.blutui.com/admin/api/redirects/{id}</api>
+**`DELETE https://{handle}.blutui.com/admin/api/redirects/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the redirect to remove.

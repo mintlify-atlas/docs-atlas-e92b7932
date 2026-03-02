@@ -50,7 +50,7 @@ curl -X GET 'https://{handle}.blutui.com/admin/api/posts' \
 
 ## Create post
 
-<api>POST https://{handle}.blutui.com/admin/api/posts</api>
+**`POST https://{handle}.blutui.com/admin/api/posts`**
 
 <ParamField body="title" type="string" required>
   The title for the blog post.
@@ -167,7 +167,7 @@ curl -X POST 'https://{handle}.blutui.com/admin/api/posts' \
 
 ## Retrieve post
 
-<api>GET https://{handle}.blutui.com/admin/api/posts/{id}</api>
+**`GET https://{handle}.blutui.com/admin/api/posts/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the post to retrieve.
@@ -193,7 +193,7 @@ curl -X GET 'https://{handle}.blutui.com/admin/api/posts/post-id' \
 
 ## Update post
 
-<api>PATCH https://{handle}.blutui.com/admin/api/posts/{id}</api>
+**`PATCH https://{handle}.blutui.com/admin/api/posts/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the post to update.
@@ -252,7 +252,7 @@ curl -X PATCH 'https://{handle}.blutui.com/admin/api/posts/post-id' \
 
 ## Remove post
 
-<api>DELETE https://{handle}.blutui.com/admin/api/posts/{id}</api>
+**`DELETE https://{handle}.blutui.com/admin/api/posts/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the post to remove.

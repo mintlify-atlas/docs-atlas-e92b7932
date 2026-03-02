@@ -50,7 +50,7 @@ curl -X GET 'https://{handle}.blutui.com/admin/api/route_patterns' \
 
 ## Create route pattern
 
-<api>POST https://{handle}.blutui.com/admin/api/route_patterns</api>
+**`POST https://{handle}.blutui.com/admin/api/route_patterns`**
 
 <ParamField body="template" type="string" required>
   The template used to display the resolved route.
@@ -119,7 +119,7 @@ curl -X POST 'https://{handle}.blutui.com/admin/api/route_patterns' \
 
 ## Retrieve route pattern
 
-<api>GET https://{handle}.blutui.com/admin/api/route_patterns/{id}</api>
+**`GET https://{handle}.blutui.com/admin/api/route_patterns/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the route pattern to retrieve.
@@ -145,7 +145,7 @@ curl -X GET 'https://{handle}.blutui.com/admin/api/route_patterns/route-pattern-
 
 ## Update route pattern
 
-<api>PATCH https://{handle}.blutui.com/admin/api/route_patterns/{id}</api>
+**`PATCH https://{handle}.blutui.com/admin/api/route_patterns/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the route pattern to update.
@@ -184,7 +184,7 @@ curl -X PATCH 'https://{handle}.blutui.com/admin/api/route_patterns/route-patter
 
 ## Remove route pattern
 
-<api>DELETE https://{handle}.blutui.com/admin/api/route_patterns/{id}</api>
+**`DELETE https://{handle}.blutui.com/admin/api/route_patterns/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the route pattern to remove.

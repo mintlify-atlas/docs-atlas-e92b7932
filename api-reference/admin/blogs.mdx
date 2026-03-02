@@ -50,7 +50,7 @@ curl -X GET 'https://{handle}.blutui.com/admin/api/blogs' \
 
 ## Create blog
 
-<api>POST https://{handle}.blutui.com/admin/api/blogs</api>
+**`POST https://{handle}.blutui.com/admin/api/blogs`**
 
 <ParamField body="name" type="string" required>
   The name of the blog.
@@ -151,7 +151,7 @@ curl -X POST 'https://{handle}.blutui.com/admin/api/blogs' \
 
 ## Retrieve blog
 
-<api>GET https://{handle}.blutui.com/admin/api/blogs/{id}</api>
+**`GET https://{handle}.blutui.com/admin/api/blogs/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the blog to retrieve.
@@ -177,7 +177,7 @@ curl -X GET 'https://{handle}.blutui.com/admin/api/blogs/99e2addd-e8d2-45c3-8184
 
 ## Update blog
 
-<api>PATCH https://{handle}.blutui.com/admin/api/blogs/{id}</api>
+**`PATCH https://{handle}.blutui.com/admin/api/blogs/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the blog to update.
@@ -228,7 +228,7 @@ curl -X PATCH 'https://{handle}.blutui.com/admin/api/blogs/99e2addd-e8d2-45c3-81
 
 ## Remove blog
 
-<api>DELETE https://{handle}.blutui.com/admin/api/blogs/{id}</api>
+**`DELETE https://{handle}.blutui.com/admin/api/blogs/{id}`**
 
 <ParamField path="id" type="string" required>
   The ID of the blog to remove.
