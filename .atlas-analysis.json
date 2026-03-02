@@ -1,0 +1,330 @@
+{
+  "projectType": "saas",
+  "projectName": "Blutui",
+  "projectDescription": "A modern web development platform for building and managing websites with a powerful templating engine, content management system, and agency tools.",
+  "theme": "mint",
+  "primaryColor": "#4F46E5",
+  "lightColor": "#818CF8",
+  "darkColor": "#312E81",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Core Concepts",
+            "pages": [
+              "core-concepts/projects",
+              "core-concepts/canopy",
+              "core-concepts/collections",
+              "core-concepts/cassettes"
+            ]
+          },
+          {
+            "group": "Courier CLI",
+            "pages": [
+              "courier/getting-started",
+              "courier/installation/macos",
+              "courier/installation/windows",
+              "courier/installation/linux",
+              "courier/commands"
+            ]
+          },
+          {
+            "group": "Components",
+            "pages": [
+              "components/overview",
+              "components/input-types"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Canvas Reference",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "canvas/overview",
+              "canvas/syntax"
+            ]
+          },
+          {
+            "group": "Tags",
+            "pages": [
+              "canvas/tags/apply",
+              "canvas/tags/autoescape",
+              "canvas/tags/block",
+              "canvas/tags/do",
+              "canvas/tags/embed",
+              "canvas/tags/extends",
+              "canvas/tags/for",
+              "canvas/tags/form",
+              "canvas/tags/from",
+              "canvas/tags/if",
+              "canvas/tags/import",
+              "canvas/tags/include",
+              "canvas/tags/macro",
+              "canvas/tags/sandbox",
+              "canvas/tags/set",
+              "canvas/tags/use",
+              "canvas/tags/verbatim",
+              "canvas/tags/with"
+            ]
+          },
+          {
+            "group": "Filters",
+            "pages": [
+              "canvas/filters/overview"
+            ]
+          },
+          {
+            "group": "Functions",
+            "pages": [
+              "canvas/functions/overview"
+            ]
+          },
+          {
+            "group": "Canopy Functions",
+            "pages": [
+              "canvas/functions/canopy/cms-text",
+              "canvas/functions/canopy/cms-heading",
+              "canvas/functions/canopy/cms-image",
+              "canvas/functions/canopy/cms-video",
+              "canvas/functions/canopy/cms-audio",
+              "canvas/functions/canopy/cms-button",
+              "canvas/functions/canopy/cms-code",
+              "canvas/functions/canopy/cms-list"
+            ]
+          },
+          {
+            "group": "Variables",
+            "pages": [
+              "canvas/variables/overview"
+            ]
+          },
+          {
+            "group": "Tests",
+            "pages": [
+              "canvas/tests/overview"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Dashboard",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "dashboard/introduction"
+            ]
+          },
+          {
+            "group": "Content Management",
+            "pages": [
+              "dashboard/pages",
+              "dashboard/blogs",
+              "dashboard/collections",
+              "dashboard/forms",
+              "dashboard/menus",
+              "dashboard/assets"
+            ]
+          },
+          {
+            "group": "Canopy Editor",
+            "pages": [
+              "dashboard/canopy/overview",
+              "dashboard/canopy/edit-text",
+              "dashboard/canopy/edit-heading",
+              "dashboard/canopy/edit-image",
+              "dashboard/canopy/edit-video",
+              "dashboard/canopy/edit-audio",
+              "dashboard/canopy/edit-button",
+              "dashboard/canopy/edit-code",
+              "dashboard/canopy/edit-list"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Console",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "console/introduction"
+            ]
+          },
+          {
+            "group": "Console Basics",
+            "pages": [
+              "console/basics/agency-console",
+              "console/basics/managing-sites",
+              "console/basics/staging-sites",
+              "console/basics/multiple-organisations"
+            ]
+          },
+          {
+            "group": "Building Sites",
+            "pages": [
+              "console/building-sites/workflow"
+            ]
+          },
+          {
+            "group": "Accounts",
+            "pages": [
+              "console/accounts/overview"
+            ]
+          },
+          {
+            "group": "Organisation Settings",
+            "pages": [
+              "console/organisation-settings/overview"
+            ]
+          },
+          {
+            "group": "Site Settings",
+            "pages": [
+              "console/site-settings/overview"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/authentication"
+            ]
+          },
+          {
+            "group": "Admin API",
+            "pages": [
+              "api-reference/admin/overview",
+              "api-reference/admin/blogs",
+              "api-reference/admin/posts",
+              "api-reference/admin/collections",
+              "api-reference/admin/entries",
+              "api-reference/admin/links",
+              "api-reference/admin/forms",
+              "api-reference/admin/submissions",
+              "api-reference/admin/menus",
+              "api-reference/admin/pages",
+              "api-reference/admin/redirects",
+              "api-reference/admin/route-patterns",
+              "api-reference/admin/users",
+              "api-reference/admin/webhooks"
+            ]
+          },
+          {
+            "group": "Console API",
+            "pages": [
+              "api-reference/console/overview",
+              "api-reference/console/brand",
+              "api-reference/console/cassettes",
+              "api-reference/console/domains",
+              "api-reference/console/invites",
+              "api-reference/console/members",
+              "api-reference/console/projects",
+              "api-reference/console/roles"
+            ]
+          },
+          {
+            "group": "Agencies API",
+            "pages": [
+              "api-reference/agencies/overview"
+            ]
+          },
+          {
+            "group": "User API",
+            "pages": [
+              "api-reference/user/overview"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "guides/introduction",
+              "guides/create-project",
+              "guides/deploy-project"
+            ]
+          },
+          {
+            "group": "Project Setup",
+            "pages": [
+              "guides/create-page",
+              "guides/create-layout",
+              "guides/create-blog",
+              "guides/create-form"
+            ]
+          },
+          {
+            "group": "Development Workflow",
+            "pages": [
+              "guides/preview-project-with-courier",
+              "guides/pull-project-with-courier",
+              "guides/push-project-with-courier"
+            ]
+          },
+          {
+            "group": "Advanced Features",
+            "pages": [
+              "guides/use-blutui-ai",
+              "guides/use-blutui-image-optimizer",
+              "guides/use-tailwind-css",
+              "guides/use-package-manager"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "groups": [
+          {
+            "group": "Product Updates",
+            "pages": [
+              "changelog/overview"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Canvas templating engine with tags, filters, and functions",
+    "Content management system with pages, blogs, collections, and forms",
+    "Courier CLI for local development and deployment",
+    "Canopy visual editor for content editing",
+    "Admin, Console, and User APIs",
+    "Agency management and white labeling",
+    "Real-time project synchronization",
+    "AI-powered components"
+  ],
+  "publicApiSurface": [
+    "Admin API: /admin/api/blogs, /admin/api/posts, /admin/api/collections, /admin/api/entries",
+    "Admin API: /admin/api/forms, /admin/api/submissions, /admin/api/menus, /admin/api/pages",
+    "Admin API: /admin/api/redirects, /admin/api/route-patterns, /admin/api/users, /admin/api/webhooks",
+    "Console API: /console/api/brand, /console/api/cassettes, /console/api/domains",
+    "Console API: /console/api/invites, /console/api/members, /console/api/projects, /console/api/roles",
+    "User API endpoints",
+    "Courier CLI: courier init, courier pull, courier push, courier dev",
+    "Canvas tags: for, if, block, extends, include, macro, set, use",
+    "Canopy functions: cms_text, cms_heading, cms_image, cms_video, cms_button"
+  ]
+}
