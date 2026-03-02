@@ -1,0 +1,62 @@
+---
+title: cms_image
+description: Define an editable image component for the Canopy visual editor.
+---
+
+The `cms_image` function is used to define an image component which can be edited on the Canopy editor.
+
+```canvas
+{{ cms_image(name, { url: '...', alt_text: '...', class: '...'}) }}
+```
+
+## Parameters
+
+<ParamField path="name" type="string" required>
+  The element identifier
+</ParamField>
+
+<ParamField path="url" type="string">
+  Link to an image to display
+</ParamField>
+
+<ParamField path="alt_text" type="string">
+  Descriptive text for accessibility and SEO
+</ParamField>
+
+<ParamField path="class" type="string">
+  A space-separated list of CSS classes to style the image component
+</ParamField>
+
+<Note>
+The `class` variable is only accessible in the code. All other variables are available in the Canopy editor.
+</Note>
+
+## Image component template
+
+```canvas
+<img src={{ url }} alt={{ alt_text }} class={{ class }} />
+```
+
+## Rendered HTML output
+
+```html
+<img
+  src="https://placehold.co/300x200"
+  alt="Placeholder Image"
+  class="rounded-lg shadow-lg"
+/>
+```
+
+## Example
+
+```canvas
+{{ cms_image('myimage', { url: 'https://placehold.co/300x200', alt_text: 'Placeholder Image', class: 'rounded-lg shadow-lg' }) }}
+```
+
+```html
+<img
+  src="https://placehold.co/300x200"
+  alt="Placeholder Image"
+  class="rounded-lg shadow-lg"
+/>
+```

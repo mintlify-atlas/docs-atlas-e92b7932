@@ -1,0 +1,91 @@
+---
+title: 'Console API'
+description: 'Scale and manage your agency projects, domains, and more'
+---
+
+## Overview
+
+The Blutui Console API is built on **REST** principles. We enforce **HTTPS** in every request to improve data security and privacy. The API does not support **HTTP**.
+
+All requests contain the following base URL:
+
+```text Console API Base URL
+https://api.blutui.com/v1
+```
+
+## Authentication
+
+The Console API requires a Blutui [access token](https://console.blutui.com/profile) to authenticate requests. Include your token in the `Authorization` header:
+
+```bash
+curl https://api.blutui.com/v1/agencies/studio/brand \
+  -H 'Authorization: Bearer ey....'
+```
+
+Learn more in the [Authentication documentation](/api-reference/authentication).
+
+## Available Resources
+
+The Console API provides endpoints for managing:
+
+<CardGroup cols={2}>
+  <Card title="Brand" icon="palette" href="/api-reference/console/brand">
+    Manage agency branding
+  </Card>
+  <Card title="Cassettes" icon="box" href="/api-reference/console/cassettes">
+    Manage project templates
+  </Card>
+  <Card title="Domains" icon="globe" href="/api-reference/console/domains">
+    Configure custom domains
+  </Card>
+  <Card title="Invites" icon="envelope" href="/api-reference/console/invites">
+    Manage team invitations
+  </Card>
+  <Card title="Members" icon="users" href="/api-reference/console/members">
+    Manage agency team members
+  </Card>
+  <Card title="Projects" icon="folder" href="/api-reference/console/projects">
+    Create and manage projects
+  </Card>
+  <Card title="Roles" icon="user-tag" href="/api-reference/console/roles">
+    Define team roles and permissions
+  </Card>
+</CardGroup>
+
+## Using the Node.js SDK
+
+The official Node.js SDK provides a clean interface for the Console API:
+
+```javascript
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+// List all projects
+const projects = await blutui.agency('studio').projects.list()
+
+// Create a new domain
+const domain = await blutui.agency('studio').domains.create({
+  name: 'example.com',
+  project: 'project-id'
+})
+
+// Get agency brand
+const brand = await blutui.agency('studio').brand.get()
+```
+
+## Pagination
+
+List endpoints support pagination with the following query parameters:
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+## Agency Username
+
+Many Console API endpoints require the `{username}` path parameter. This is your agency's unique username, which can be found in your agency settings.

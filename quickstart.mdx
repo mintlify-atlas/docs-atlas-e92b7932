@@ -1,80 +1,186 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: Quickstart
+description: Get from zero to your first deployed Blutui project in minutes
 ---
 
-## Get started in three steps
+This guide will walk you through creating your first Blutui project, setting up local development with Courier, and deploying your changes.
 
-Get your documentation site running locally and make your first customization.
+## Prerequisites
 
-### Step 1: Set up your local environment
+Before you begin, make sure you have:
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+- A [Blutui account](https://auth.blutui.com/register)
+- Node.js and npm installed (for most starter templates)
+- Basic familiarity with HTML and terminal commands
 
-### Step 2: Deploy your changes
+<Steps>
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+<Step title="Create a Blutui Account">
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+If you don't already have one, [sign up for a Blutui account](https://auth.blutui.com/register). Development projects are free and password-protected.
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+</Step>
 
-### Step 3: Go live
+<Step title="Create Your First Project">
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+1. Login to your [Agency Console](https://console.blutui.com)
+2. Click **Projects** in the navigation menu
+3. Click **Create project**
+4. Enter a **Project name** (e.g., "my-first-project")
+5. Optionally add a description and set your timezone
+6. Click **Create project**
 
-## Next steps
+<Info>
+Development projects are free and password-protected. Production projects require a monthly subscription.
+</Info>
 
-Now that you have your docs running, explore these key features:
+</Step>
 
-<CardGroup cols={2}>
+<Step title="Install Courier CLI">
 
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
+Courier is Blutui's command-line tool for local development. Choose your operating system:
 
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
+<CodeGroup>
 
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
+```bash macOS
+brew install --cask blutui/courier/courier
+```
 
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
+```bash Windows
+scoop bucket add blutui https://github.com/blutui/bucket-courier.git
+scoop install blutui/courier
+```
 
-</CardGroup>
+```bash Linux (Debian/Ubuntu)
+# Download .deb from https://blutui.com/developers/courier
+sudo apt install ./courier_*_linux_amd64.deb
+```
+
+</CodeGroup>
 
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+For detailed installation instructions, see the [Courier installation guides](/courier/installation/macos).
 </Note>
+
+</Step>
+
+<Step title="Create a Courier Token">
+
+1. In your [Agency Console](https://console.blutui.com), click your avatar in the top-right
+2. Choose **Edit my profile**
+3. Go to the **Apps** section in the sidebar
+4. Click **Create token** under "Access tokens"
+5. Name your token (e.g., "Work MacBook")
+6. Set the token type to **Courier**
+7. Click **Create token** and copy the token (it's only shown once)
+
+</Step>
+
+<Step title="Login to Courier">
+
+Create a temporary file with your token and login:
+
+```bash
+echo "your-token-here" > token.txt
+courier login --token < token.txt
+rm token.txt
+```
+
+</Step>
+
+<Step title="Pull Your Project">
+
+Create a directory for your project and initialize it:
+
+```bash
+mkdir my-first-project
+cd my-first-project
+courier init my-first-project
+courier pull
+```
+
+This creates a `courier.json` configuration file and pulls your project files into `public/` and `views/` directories.
+
+</Step>
+
+<Step title="Start Local Development">
+
+If your project uses a build tool (like the tailwindcss-js template), install dependencies first:
+
+```bash
+npm install
+npm run dev
+```
+
+Then in a separate terminal, start Courier's development server:
+
+```bash
+courier dev
+```
+
+Your project will be available at `https://localhost:8080/`
+
+<Info>
+Courier dev watches for file changes in `public/` and `views/` and automatically syncs them to Blutui.
+</Info>
+
+</Step>
+
+<Step title="Make Your First Change">
+
+Edit a file in the `views/` directory. For example, create or edit `views/layouts/default.canvas`:
+
+```canvas views/layouts/default.canvas
+{% block body %}
+  <section class="bg-white text-slate-900 p-8">
+    {{ cms_heading('hero-heading', {
+      element: 'h1',
+      value: 'Welcome to My First Blutui Project',
+      class: 'text-4xl font-bold'
+    }) }}
+    
+    {{ cms_text('hero-description', {
+      value: 'This is my first project built with Blutui!',
+      class: 'text-lg mt-4'
+    }) }}
+  </section>
+{% endblock %}
+```
+
+Courier will automatically sync your changes.
+
+</Step>
+
+<Step title="Push Your Changes">
+
+When you're ready to deploy your changes to the staging environment:
+
+```bash
+courier push
+```
+
+Your project will be available at `https://your-project-handle.blutui.com`
+
+</Step>
+
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Learn Core Concepts" href="/core-concepts/projects">
+    Understand projects, cassettes, and the Blutui architecture
+  </Card>
+  
+  <Card title="Explore Canopy" href="/core-concepts/canopy">
+    Learn how to create editable content for non-technical users
+  </Card>
+  
+  <Card title="Work with Collections" href="/core-concepts/collections">
+    Create structured, reusable data for your projects
+  </Card>
+  
+  <Card title="Courier Commands" href="/courier/commands">
+    Master all the Courier CLI commands
+  </Card>
+</CardGroup>

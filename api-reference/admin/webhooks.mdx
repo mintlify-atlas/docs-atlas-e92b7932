@@ -1,0 +1,179 @@
+---
+title: 'Webhooks'
+description: 'Manage webhook endpoints for your project'
+api: 'GET https://{handle}.blutui.com/admin/api/webhooks'
+---
+
+## List all webhooks
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+<ParamField query="expand" type="string[]">
+  Expand the response for the given items. Expand array accepts `list`.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.webhooks.list()
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/webhooks' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseField name="object" type="string">
+  This will always contain `list` for this endpoint.
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  An array of up to `limit` webhook resources. If no webhook endpoints are available, an empty array is returned.
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Additional information about the list.
+</ResponseField>
+
+---
+
+## Create webhook
+
+<api>POST https://{handle}.blutui.com/admin/api/webhooks</api>
+
+<ParamField body="url" type="string" required>
+  The webhook endpoint to receive events.
+</ParamField>
+
+<ParamField body="events" type="array" required>
+  The list of events to send to the webhook endpoint.
+</ParamField>
+
+<ParamField body="events[]" type="string">
+  The webhook event.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.webhooks.create({
+  url: 'https://webhook.endpoint.test/123456',
+  events: ['form.submission.created'],
+})
+```
+
+```bash cURL
+curl -X POST 'https://{handle}.blutui.com/admin/api/webhooks' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "url": "https://webhook.endpoint.test/123456",
+  "events": ["form.submission.created"]
+}'
+```
+</CodeGroup>
+
+---
+
+## Retrieve webhook
+
+<api>GET https://{handle}.blutui.com/admin/api/webhooks/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the webhook to retrieve.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.webhooks.get('webhook-id')
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/webhooks/webhook-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Update webhook
+
+<api>PATCH https://{handle}.blutui.com/admin/api/webhooks/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the webhook to update.
+</ParamField>
+
+<ParamField body="url" type="string">
+  The webhook endpoint to receive events.
+</ParamField>
+
+<ParamField body="events" type="array">
+  The list of events to send to the webhook endpoint.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.webhooks.update('webhook-id', {
+  events: ['form.submission.created', 'form.submission.updated'],
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://{handle}.blutui.com/admin/api/webhooks/webhook-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "events": ["form.submission.created", "form.submission.updated"]
+}'
+```
+</CodeGroup>
+
+---
+
+## Remove webhook
+
+<api>DELETE https://{handle}.blutui.com/admin/api/webhooks/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the webhook to remove.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.webhooks.remove('webhook-id')
+```
+
+```bash cURL
+curl -X DELETE 'https://{handle}.blutui.com/admin/api/webhooks/webhook-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>

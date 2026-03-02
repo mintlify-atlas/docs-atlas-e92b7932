@@ -1,0 +1,90 @@
+---
+title: embed
+description: Combine template inclusion with block overriding.
+---
+
+The **embed** tag combines the behaviour of [include](/canvas/tags/include) and [extends](/canvas/tags/extends). It allows you to include another template's contents, just like `include` does. But it also allows you to override any block defined inside the included template, like when extending a template.
+
+Think of an embedded template as a "micro layout skeleton".
+
+```canvas
+{% embed 'teasers_skeleton.html' %}
+  {# These blocks are defined in "teasers_skeleton.html" and we override them right here: #}
+  {% block left_teaser %}
+    Some content for the left teaser box
+  {% endblock %}
+  {% block right_teaser %}
+    Some content for the right teaser box
+  {% endblock %}
+{% endembed %}
+```
+
+The **embed** tag takes the idea of template inheritance to the level of content fragments. While template inheritance allows for "document skeletons", which are filled with life by child templates, the **embed** tag allows you to create "skeletons" for smaller units of content and re-use and fill them anywhere you like.
+
+## Use case example
+
+Since the use case may not be obvious, let's look at a simplified example. Imagine a base template shared by multiple pages, defining a single block named "content".
+
+Some pages ("foo.html" and "bar.html") share the same content structure - two vertically stacked boxes, while other pages ("boom.html" and "baz.html") share a different content structure - two boxes side by side.
+
+Without the **embed** tag, you would need to either:
+1. Create multiple intermediate base templates for each layout variation
+2. Duplicate the markup for the different structures in each page
+
+With the **embed** tag, the common layout code can live in a single base template, and the different content structures go into separate templates which are embedded as necessary:
+
+### Page template foo.html:
+
+```canvas
+{% extends "layout.html" %}
+
+{% block content %}
+  {% embed "vertical_boxes_skeleton.html" %}
+    {% block top %}
+      Some content for the top box
+    {% endblock %}
+
+    {% block bottom %}
+      Some content for the bottom box
+    {% endblock %}
+  {% endembed %}
+{% endblock %}
+```
+
+### vertical_boxes_skeleton.html:
+
+```canvas
+<div class="top_box">
+  {% block top %}
+    Top box default content
+  {% endblock %}
+</div>
+
+<div class="bottom_box">
+  {% block bottom %}
+    Bottom box default content
+  {% endblock %}
+</div>
+```
+
+## Arguments
+
+The **embed** tag takes the exact same arguments as the [include](/canvas/tags/include) tag:
+
+```canvas
+{% embed "base" with {'foo': 'bar'} %}
+  ...
+{% endembed %}
+
+{% embed "base" with {'foo': 'bar'} only %}
+  ...
+{% endembed %}
+
+{% embed "base" ignore missing %}
+  ...
+{% endembed %}
+```
+
+<Note>
+As embedded templates do not have "names", auto-escaping strategies based on the template name won't work as expected if you change the context. In that case, explicitly set the default auto-escaping strategy with the [autoescape](/canvas/tags/autoescape) tag.
+</Note>

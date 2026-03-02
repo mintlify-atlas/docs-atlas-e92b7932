@@ -1,0 +1,265 @@
+---
+title: 'Forms'
+description: 'Manage forms for your project'
+api: 'GET https://{handle}.blutui.com/admin/api/forms'
+---
+
+## List all forms
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+<ParamField query="expand" type="string[]">
+  Expand the response for the given items. Expand array accepts: `fields`.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.forms.list()
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/forms' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseField name="object" type="string">
+  This will always contain `list` for this endpoint.
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  An array of up to `limit` form resources. If no forms are available, an empty array is returned.
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Additional information about the list.
+</ResponseField>
+
+---
+
+## Create form
+
+<api>POST https://{handle}.blutui.com/admin/api/forms</api>
+
+<ParamField body="name" type="string" required>
+  The name of this form.
+</ParamField>
+
+<ParamField body="handle" type="string" required>
+  The unique handle for this form.
+</ParamField>
+
+<ParamField body="template" type="string" required>
+  The template used to display this form.
+</ParamField>
+
+<ParamField body="fields" type="array">
+  The fields for this form.
+</ParamField>
+
+<ParamField body="fields[].name" type="string" required>
+  The name of the form field.
+</ParamField>
+
+<ParamField body="fields[].label" type="string" required>
+  The label for the form field.
+</ParamField>
+
+<ParamField body="fields[].type" type="string" required>
+  The type of form field.
+</ParamField>
+
+<ParamField body="fields[].default_value" type="string | null">
+  The default value for the form field.
+</ParamField>
+
+<ParamField body="fields[].help_text" type="string | null">
+  A short description about this form field.
+</ParamField>
+
+<ParamField body="fields[].order" type="number">
+  The order of the form field.
+</ParamField>
+
+<ParamField body="fields[].placeholder" type="string | null">
+  The placeholder value for the form field.
+</ParamField>
+
+<ParamField body="fields[].required" type="boolean">
+  Whether the form field is required or not.
+</ParamField>
+
+<ParamField body="email_from" type="string">
+  The sender email address.
+</ParamField>
+
+<ParamField body="email_to" type="string">
+  The recipient email address.
+</ParamField>
+
+<ParamField body="store_submissions" type="boolean">
+  Whether the form submissions should be stored or not.
+</ParamField>
+
+<ParamField body="detects_spam" type="boolean">
+  Whether the form submissions should be checked for spam or not.
+</ParamField>
+
+<ParamField body="spam_score" type="number">
+  The spam score given to a form submission in order to be marked as spam.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.forms.create({
+  name: 'Contact',
+  handle: 'contact',
+  fields: [
+    {
+      name: 'name',
+      label: 'Full Name',
+      type: 'text'
+    },
+    {
+      name: 'email',
+      label: 'Email Address',
+      type: 'email'
+    }
+  ],
+  template: 'forms/contact.canvas'
+})
+```
+
+```bash cURL
+curl -X POST 'https://{handle}.blutui.com/admin/api/forms' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "name": "Contact",
+  "handle": "contact",
+  "fields": [
+    {
+      "name": "name",
+      "label": "Full Name",
+      "type": "text"
+    },
+    {
+      "name": "email",
+      "label": "Email Address",
+      "type": "email"
+    }
+  ],
+  "template": "forms/contact.canvas"
+}'
+```
+</CodeGroup>
+
+---
+
+## Retrieve form
+
+<api>GET https://{handle}.blutui.com/admin/api/forms/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the form to retrieve.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.forms.get('form-id')
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/forms/form-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Update form
+
+<api>PATCH https://{handle}.blutui.com/admin/api/forms/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the form to update.
+</ParamField>
+
+<ParamField body="name" type="string">
+  The name of this form.
+</ParamField>
+
+<ParamField body="handle" type="string">
+  The unique handle for this form.
+</ParamField>
+
+<ParamField body="template" type="string">
+  The template used to display this form.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.forms.update('form-id', {
+  name: 'Updated Contact Form',
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://{handle}.blutui.com/admin/api/forms/form-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "name": "Updated Contact Form"
+}'
+```
+</CodeGroup>
+
+---
+
+## Remove form
+
+<api>DELETE https://{handle}.blutui.com/admin/api/forms/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the form to remove.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.forms.remove('form-id')
+```
+
+```bash cURL
+curl -X DELETE 'https://{handle}.blutui.com/admin/api/forms/form-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>

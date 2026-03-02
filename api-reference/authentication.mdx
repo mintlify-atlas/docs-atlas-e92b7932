@@ -1,0 +1,96 @@
+---
+title: 'Authentication'
+description: "Authenticate your API requests with Blutui access tokens"
+---
+
+## Overview
+
+All Blutui API requests require authentication using access tokens. API requests made without a valid access token will return a `401` error. Requests with a valid token but insufficient permissions will return a `403` error.
+
+## Access Tokens
+
+You can generate access tokens from your [Blutui profile](https://console.blutui.com/profile). Each token can be scoped to specific permissions.
+
+## Authentication Methods
+
+### Bearer Token
+
+Include your access token in the `Authorization` header with the `Bearer` scheme:
+
+```bash cURL
+curl https://{handle}.blutui.com/admin/api/blogs \
+  -H 'Authorization: Bearer ey....'
+```
+
+```javascript Node.js SDK
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+// The SDK automatically includes the token in all requests
+await blutui.project('one').admin.blogs.list()
+```
+
+## Access Scopes
+
+To keep the platform secure, access tokens should request only the scopes necessary for your application. It is recommended to follow the principle of least privilege when requesting access scopes.
+
+### Available Scopes
+
+Depending on your use case, you may need access to:
+
+- **Content Management** - Read and write access to blogs, posts, collections, and entries
+- **Project Resources** - Manage pages, menus, forms, and redirects
+- **Console Management** - Manage projects, domains, and team members
+- **User Information** - Access authenticated user data
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Store tokens securely">
+    Never expose access tokens in client-side code or public repositories. Use environment variables or secure credential storage.
+  </Accordion>
+  
+  <Accordion title="Request minimal scopes">
+    Only request the access scopes your application needs to function. This minimizes security risk.
+  </Accordion>
+  
+  <Accordion title="Rotate tokens regularly">
+    Periodically generate new access tokens and revoke old ones to maintain security.
+  </Accordion>
+  
+  <Accordion title="Handle errors gracefully">
+    Implement proper error handling for authentication failures and permission issues.
+  </Accordion>
+</AccordionGroup>
+
+## Testing Your Authentication
+
+Test your authentication setup by making a simple API request:
+
+<CodeGroup>
+```bash cURL (Admin API)
+curl -X GET 'https://{handle}.blutui.com/admin/api/blogs' \
+  -H 'Authorization: Bearer ey....'
+```
+
+```bash cURL (Console API)
+curl -X GET 'https://api.blutui.com/v1/agencies' \
+  -H 'Authorization: Bearer ey....'
+```
+
+```javascript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+try {
+  const blogs = await blutui.project('one').admin.blogs.list()
+  console.log('Authentication successful!', blogs)
+} catch (error) {
+  console.error('Authentication failed:', error)
+}
+```
+</CodeGroup>
+
+A successful response confirms your authentication is working correctly.

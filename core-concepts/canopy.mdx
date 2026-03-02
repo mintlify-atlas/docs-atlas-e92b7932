@@ -1,0 +1,335 @@
+---
+title: Canopy
+description: Visual content editor that allows non-technical users to edit page-specific content without touching code
+---
+
+Canopy is Blutui's visual content editor that empowers content editors to manage page-specific editable content directly from the dashboard without writing code.
+
+## What is Canopy?
+
+Canopy elements are special functions you add to your Canvas templates that create editable regions. These regions can be edited by content managers through the Blutui dashboard using a visual interface.
+
+<Info>
+Canopy elements are **page-specific** - each element's content is tied to the page it appears on. For reusable, global content, use [Collections](/core-concepts/collections) instead.
+</Info>
+
+## Key Concepts
+
+### Handles
+
+Each Canopy element requires a unique **handle** (identifier) that:
+
+- Must be unique within each page
+- Is used to identify the element in the Canopy editor
+- Maps to editable fields in the dashboard
+
+### Attributes
+
+Elements accept optional attributes to configure their appearance and behavior, such as:
+
+- Default values
+- CSS classes
+- HTML element types
+- URLs and link targets
+
+## Available Canopy Elements
+
+Blutui provides seven Canopy element types:
+
+### Text
+
+Editable text content for paragraphs and short strings.
+
+```canvas
+{{ cms_text('description', {
+  value: 'This is editable text content.',
+  class: 'text-lg text-slate-600'
+}) }}
+```
+
+### Heading
+
+Editable headings (h1-h6).
+
+```canvas
+{{ cms_heading('page-title', {
+  element: 'h1',
+  value: 'Welcome to Our Site',
+  class: 'text-4xl font-bold'
+}) }}
+```
+
+### Image
+
+Editable images with alt text.
+
+```canvas
+{{ cms_image('hero-image', {
+  url: 'https://placehold.co/1200x900',
+  alt_text: 'Hero Image',
+  class: 'w-full h-auto object-cover'
+}) }}
+```
+
+### Button
+
+Editable link buttons.
+
+```canvas
+{{ cms_button('cta-button', {
+  text: 'Get Started',
+  url: '#contact',
+  opens_new_tab: false,
+  class: 'bg-blue-600 text-white px-6 py-3 rounded'
+}) }}
+```
+
+### List
+
+Editable ordered or unordered lists.
+
+```canvas
+{{ cms_list('features', {
+  ordered: false,
+  items: ['Feature one', 'Feature two', 'Feature three'],
+  class: 'list-disc ml-6'
+}) }}
+```
+
+### Quote
+
+Editable blockquotes with citations.
+
+```canvas
+{{ cms_quote('testimonial', {
+  value: 'This product changed my life!',
+  cite: 'Jane Doe, CEO',
+  class: 'italic border-l-4 pl-4'
+}) }}
+```
+
+### Code
+
+Editable code blocks.
+
+```canvas
+{{ cms_code('code-sample', {
+  value: 'console.log("Hello World");',
+  class: 'bg-slate-900 text-white p-4 rounded'
+}) }}
+```
+
+## Creating a Page with Canopy Elements
+
+Here's a complete example of a hero section with Canopy elements:
+
+<Steps>
+
+<Step title="Create the Layout File">
+
+Create `views/layouts/default.canvas`:
+
+```canvas views/layouts/default.canvas
+{% block body %}
+<section class="bg-white text-slate-900">
+  <div class="mx-auto max-w-7xl px-6 py-20">
+    {{ cms_heading('heading-hero', {
+      element: 'h1',
+      value: 'Welcome to Our Site',
+      class: 'text-3xl md:text-5xl font-semibold mb-4'
+    }) }}
+
+    {{ cms_text('text-description', {
+      value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      class: 'text-lg text-slate-600 mb-6'
+    }) }}
+
+    {{ cms_button('button-cta', {
+      text: 'Get Started',
+      url: '#contact',
+      opens_new_tab: false,
+      class: 'inline-flex items-center bg-slate-900 text-white px-5 py-3 rounded'
+    }) }}
+
+    {{ cms_image('image-hero', {
+      url: 'https://placehold.co/1200x900',
+      alt_text: 'Hero Image',
+      class: 'w-full h-auto object-cover mt-8 rounded-lg'
+    }) }}
+  </div>
+</section>
+{% endblock %}
+```
+
+</Step>
+
+<Step title="Create a Page in the Dashboard">
+
+1. Open your project in the [Agency Console](https://console.blutui.com)
+2. Navigate to **Pages**
+3. Click **Create page**
+4. Select the `default.canvas` layout
+5. Save the page
+
+</Step>
+
+<Step title="Edit Content in Canopy">
+
+1. Open the page in your browser
+2. Click the **Canopy editor** button in the bottom-left corner
+3. Edit the content for each element:
+   - `heading-hero` - Update the heading text
+   - `text-description` - Change the description
+   - `button-cta` - Modify button text and URL
+   - `image-hero` - Upload a new image
+4. Save your changes
+
+</Step>
+
+</Steps>
+
+## How Content Editors Use Canopy
+
+Content editors access Canopy through a visual interface:
+
+1. **Navigate to the page** they want to edit
+2. **Click the Canopy editor button** in the bottom-left corner
+3. **See all editable elements** with their handles as labels
+4. **Click on any element** to edit its content
+5. **Preview changes** in real-time
+6. **Save and publish** when ready
+
+<Note>
+Content editors don't need to understand code or file structures - they simply edit content through the visual interface.
+</Note>
+
+## Best Practices
+
+### Use Descriptive Handles
+
+Choose clear, descriptive handles that indicate the element's purpose:
+
+```canvas
+// Good
+{{ cms_heading('homepage-hero-title', {...}) }}
+{{ cms_text('about-section-description', {...}) }}
+
+// Avoid
+{{ cms_heading('h1', {...}) }}
+{{ cms_text('text1', {...}) }}
+```
+
+### Provide Meaningful Defaults
+
+Set helpful default values that guide content editors:
+
+```canvas
+{{ cms_text('contact-email', {
+  value: 'contact@example.com',
+  class: 'text-blue-600 underline'
+}) }}
+```
+
+### Combine with Collections for Reusable Content
+
+Use Canopy for page-specific content and Collections for reusable data:
+
+- **Canopy** - Homepage hero, About page content, Contact page text
+- **Collections** - Team members, products, blog posts, testimonials
+
+### Keep Elements Simple
+
+Avoid complex nested structures. If you need complex content, consider using Collections with rich text fields instead.
+
+## Canopy vs Collections
+
+| Feature | Canopy | Collections |
+|---------|--------|-------------|
+| **Scope** | Page-specific | Global/reusable |
+| **Use case** | Hero sections, page content | Products, team members, blog posts |
+| **Repeatability** | One per page | Multiple entries |
+| **Structure** | Simple elements | Complex schemas |
+| **Editor interface** | Visual on-page editor | Dashboard forms |
+
+## Example: Complete Landing Page
+
+Here's a full landing page using multiple Canopy elements:
+
+```canvas views/layouts/landing.canvas
+{% block body %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+    {{ cms_heading('hero-title', {
+      element: 'h1',
+      value: 'Build Amazing Websites',
+      class: 'text-5xl font-bold mb-4'
+    }) }}
+    
+    {{ cms_text('hero-subtitle', {
+      value: 'The fastest way to create beautiful, responsive websites.',
+      class: 'text-xl mb-8'
+    }) }}
+    
+    {{ cms_button('hero-cta', {
+      text: 'Get Started Free',
+      url: '/signup',
+      opens_new_tab: false,
+      class: 'bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold'
+    }) }}
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-6">
+    {{ cms_heading('features-title', {
+      element: 'h2',
+      value: 'Why Choose Us',
+      class: 'text-3xl font-bold text-center mb-12'
+    }) }}
+    
+    {{ cms_list('features-list', {
+      ordered: false,
+      items: [
+        'Lightning-fast performance',
+        'Visual content editing',
+        'Powerful templating engine'
+      ],
+      class: 'list-disc ml-6 text-lg space-y-2'
+    }) }}
+  </div>
+</section>
+
+<!-- Testimonial Section -->
+<section class="bg-slate-100 py-16">
+  <div class="max-w-4xl mx-auto px-6">
+    {{ cms_quote('customer-testimonial', {
+      value: 'Blutui transformed how we build websites. Our team is more productive than ever.',
+      cite: 'Sarah Johnson, Tech Lead',
+      class: 'text-2xl italic border-l-4 border-blue-600 pl-6'
+    }) }}
+  </div>
+</section>
+{% endblock %}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Canopy Input Types" href="/components/input-types">
+    Detailed reference for all Canopy element types and their attributes
+  </Card>
+  
+  <Card title="Collections" href="/core-concepts/collections">
+    Learn about structured, reusable content
+  </Card>
+  
+  <Card title="Canvas Functions" href="/canvas/getting-started/filters-functions">
+    Explore all available Canvas functions
+  </Card>
+  
+  <Card title="Dashboard Guide" href="https://console.blutui.com">
+    Learn how to manage content in the dashboard
+  </Card>
+</CardGroup>

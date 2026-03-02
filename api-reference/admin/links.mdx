@@ -1,0 +1,215 @@
+---
+title: 'Links'
+description: 'Manage collection links for your project'
+api: 'GET https://{handle}.blutui.com/admin/api/collections/{collection_id}/links'
+---
+
+## List all collection links
+
+<ParamField path="collection_id" type="string" required>
+  The ID of the collection.
+</ParamField>
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+<ParamField query="expand" type="string[]">
+  Expand the response for the given items. Expand array accepts `list`.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.links.list('collection-id')
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/collections/collection-id/links' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseField name="object" type="string">
+  This will always contain `list` for this endpoint.
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  An array of up to `limit` collection link resources. If no collection links are available, an empty array is returned.
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Additional information about the list.
+</ResponseField>
+
+---
+
+## Create collection link
+
+<api>POST https://{handle}.blutui.com/admin/api/collections/{collection_id}/links</api>
+
+<ParamField path="collection_id" type="string" required>
+  The ID of the collection.
+</ParamField>
+
+<ParamField body="to" type="string" required>
+  The ID of the collection that is linked to.
+</ParamField>
+
+<ParamField body="type" type="string" required>
+  The type of collection link.
+</ParamField>
+
+<ParamField body="through_field" type="string" required>
+  The `name` of the collection field the link is through.
+</ParamField>
+
+<ParamField body="foreign_key" type="string" required>
+  The `name` of the foreign key on the collection that is linked to.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.links.create('collection-id', {
+  to: '0195b544-bc46-7223-851d-3ce553b11ae6',
+  type: 'hasMany',
+  through_field: 'title',
+  foreign_key: 'collection'
+})
+```
+
+```bash cURL
+curl -X POST 'https://{handle}.blutui.com/admin/api/collections/collection-id/links' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "to": "0195b544-bc46-7223-851d-3ce553b11ae6",
+  "type": "hasMany",
+  "through_field": "title",
+  "foreign_key": "collection"
+}'
+```
+</CodeGroup>
+
+---
+
+## Retrieve collection link
+
+<api>GET https://{handle}.blutui.com/admin/api/collections/{collection_id}/links/{id}</api>
+
+<ParamField path="collection_id" type="string" required>
+  The ID of the collection.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the link to retrieve.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.links.get('collection-id', 'link-id')
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/collections/collection-id/links/link-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Update collection link
+
+<api>PATCH https://{handle}.blutui.com/admin/api/collections/{collection_id}/links/{id}</api>
+
+<ParamField path="collection_id" type="string" required>
+  The ID of the collection.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the link to update.
+</ParamField>
+
+<ParamField body="to" type="string">
+  The ID of the collection that is linked to.
+</ParamField>
+
+<ParamField body="type" type="string">
+  The type of collection link.
+</ParamField>
+
+<ParamField body="through_field" type="string">
+  The `name` of the collection field the link is through.
+</ParamField>
+
+<ParamField body="foreign_key" type="string">
+  The `name` of the foreign key on the collection that is linked to.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.links.update('collection-id', 'link-id', {
+  type: 'belongsTo',
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://{handle}.blutui.com/admin/api/collections/collection-id/links/link-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "type": "belongsTo"
+}'
+```
+</CodeGroup>
+
+---
+
+## Remove collection link
+
+<api>DELETE https://{handle}.blutui.com/admin/api/collections/{collection_id}/links/{id}</api>
+
+<ParamField path="collection_id" type="string" required>
+  The ID of the collection.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the link to remove.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.links.remove('collection-id', 'link-id')
+```
+
+```bash cURL
+curl -X DELETE 'https://{handle}.blutui.com/admin/api/collections/collection-id/links/link-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>

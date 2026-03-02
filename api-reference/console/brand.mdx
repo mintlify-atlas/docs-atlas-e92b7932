@@ -1,0 +1,186 @@
+---
+title: 'Brand'
+description: 'Manage your agency brand settings'
+api: 'GET https://api.blutui.com/v1/agencies/{username}/brand'
+---
+
+## Retrieve brand
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<Note>
+If an agency brand doesn't exist a `204` `No Content` response is returned.
+</Note>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').brand.get()
+```
+
+```bash cURL
+curl -X GET 'https://api.blutui.com/v1/agencies/studio/brand' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseExample>
+```json Response
+{
+  "id": "9bfdb42b-1bf0-4510-978e-46aa329f8efa",
+  "object": "brand",
+  "primary_color": "#6227FF",
+  "secondary_color": "#333333",
+  "created_at": 1690330767,
+  "updated_at": 1703633941
+}
+```
+</ResponseExample>
+
+<ResponseField name="id" type="string">
+  The unique identifier for this brand.
+</ResponseField>
+
+<ResponseField name="object" type="string">
+  This will always contain `brand` for this endpoint.
+</ResponseField>
+
+<ResponseField name="logo" type="string">
+  The image URL of the agency logo.
+</ResponseField>
+
+<ResponseField name="primary_color" type="string">
+  The primary hexadecimal color of the agency brand.
+</ResponseField>
+
+<ResponseField name="secondary_color" type="string">
+  The secondary hexadecimal color of the agency brand.
+</ResponseField>
+
+<ResponseField name="created_at" type="timestamp">
+  The brand's created at timestamp.
+</ResponseField>
+
+<ResponseField name="updated_at" type="timestamp">
+  The brand's updated at timestamp.
+</ResponseField>
+
+---
+
+## Create brand
+
+<api>POST https://api.blutui.com/v1/agencies/{username}/brand</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField body="primary_color" type="string" required>
+  The primary hexadecimal color of the agency brand.
+</ParamField>
+
+<ParamField body="secondary_color" type="string" required>
+  The secondary hexadecimal color of the agency brand.
+</ParamField>
+
+<ParamField body="logo" type="string">
+  The image URL of the agency logo.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').brand.create({
+  primaryColor: '#000000',
+  secondaryColor: '#222222'
+})
+```
+
+```bash cURL
+curl -X POST 'https://api.blutui.com/v1/agencies/studio/brand' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "primary_color": "#000000",
+  "secondary_color": "#222222"
+}'
+```
+</CodeGroup>
+
+---
+
+## Update brand
+
+<api>PATCH https://api.blutui.com/v1/agencies/{username}/brand</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField body="primary_color" type="string">
+  The primary hexadecimal color of the agency brand.
+</ParamField>
+
+<ParamField body="secondary_color" type="string">
+  The secondary hexadecimal color of the agency brand.
+</ParamField>
+
+<ParamField body="logo" type="string">
+  The image URL of the agency logo.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').brand.update({
+  primaryColor: '#FF0000'
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://api.blutui.com/v1/agencies/studio/brand' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "primary_color": "#FF0000"
+}'
+```
+</CodeGroup>
+
+---
+
+## Remove brand
+
+<api>DELETE https://api.blutui.com/v1/agencies/{username}/brand</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').brand.remove()
+```
+
+```bash cURL
+curl -X DELETE 'https://api.blutui.com/v1/agencies/studio/brand' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>

@@ -1,0 +1,124 @@
+---
+title: 'Admin API'
+description: 'Manage project content and resources with the Admin API'
+---
+
+## Overview
+
+The Blutui Admin API is built on **REST** principles. We enforce **HTTPS** in every request to improve data security and privacy. The API does not support **HTTP**.
+
+All requests contain the following base URL, where `handle` is your project's handle:
+
+```text Admin API Base URL
+https://{handle}.blutui.com/admin/api
+```
+
+## Authentication
+
+The Admin API requires a Blutui [access token](https://console.blutui.com/profile) to authenticate requests. Include your token in the `Authorization` header:
+
+```bash
+curl https://{handle}.blutui.com/admin/api/blogs \
+  -H 'Authorization: Bearer ey....'
+```
+
+Learn more in the [Authentication documentation](/api-reference/authentication).
+
+## Available Resources
+
+The Admin API provides endpoints for managing:
+
+<CardGroup cols={2}>
+  <Card title="Blogs" icon="blog" href="/api-reference/admin/blogs">
+    Create and manage blogs
+  </Card>
+  <Card title="Posts" icon="newspaper" href="/api-reference/admin/posts">
+    Manage blog posts and content
+  </Card>
+  <Card title="Collections" icon="database" href="/api-reference/admin/collections">
+    Define custom content structures
+  </Card>
+  <Card title="Entries" icon="list" href="/api-reference/admin/entries">
+    Manage collection entries
+  </Card>
+  <Card title="Links" icon="link" href="/api-reference/admin/links">
+    Create and manage links
+  </Card>
+  <Card title="Forms" icon="file-lines" href="/api-reference/admin/forms">
+    Manage forms and fields
+  </Card>
+  <Card title="Submissions" icon="paper-plane" href="/api-reference/admin/submissions">
+    Access form submissions
+  </Card>
+  <Card title="Menus" icon="bars" href="/api-reference/admin/menus">
+    Create navigation menus
+  </Card>
+  <Card title="Pages" icon="file" href="/api-reference/admin/pages">
+    Manage project pages
+  </Card>
+  <Card title="Redirects" icon="arrow-right" href="/api-reference/admin/redirects">
+    Configure URL redirects
+  </Card>
+  <Card title="Route Patterns" icon="route" href="/api-reference/admin/route-patterns">
+    Define dynamic routes
+  </Card>
+  <Card title="Users" icon="users" href="/api-reference/admin/users">
+    Manage project users
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/api-reference/admin/webhooks">
+    Configure webhook endpoints
+  </Card>
+</CardGroup>
+
+## Using the Node.js SDK
+
+The official Node.js SDK provides a clean interface for the Admin API:
+
+```javascript
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+// List all blogs
+const blogs = await blutui.project('one').admin.blogs.list()
+
+// Create a new blog post
+const post = await blutui.project('one').admin.posts.create({
+  title: 'Hello World',
+  slug: 'hello-world',
+  content: '<p>Welcome to my blog!</p>',
+  author: 'John Doe',
+  blog: 'blog-id',
+  publish_date: '2024/09/25 11:00:00'
+})
+
+// Update a collection entry
+const entry = await blutui.project('one').admin.entries.update(
+  'collection-id',
+  'entry-id',
+  { title: 'Updated Title' }
+)
+```
+
+## Pagination
+
+List endpoints support pagination with the following query parameters:
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+## Expanding Resources
+
+Many endpoints support expanding related resources using the `expand` query parameter:
+
+```bash
+curl 'https://{handle}.blutui.com/admin/api/blogs?expand[]=list' \
+  -H 'Authorization: Bearer ey....'
+```
+
+Available expand options vary by endpoint. Check individual endpoint documentation for details.

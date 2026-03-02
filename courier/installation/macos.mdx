@@ -1,0 +1,160 @@
+---
+title: Install Courier on macOS
+description: Install Blutui Courier CLI on macOS using Homebrew
+---
+
+Courier is available for macOS via Homebrew, making installation and updates simple.
+
+## Installation
+
+Install Courier using Homebrew:
+
+```bash
+brew install --cask blutui/courier/courier
+```
+
+<Note>
+If you don't have Homebrew installed, visit [brew.sh](https://brew.sh) for installation instructions.
+</Note>
+
+## Create a Courier Token
+
+Before using Courier, you need to generate a Blutui access token:
+
+<Steps>
+
+<Step title="Access Your Profile">
+
+1. Login to your [Agency Console](https://console.blutui.com)
+2. Click your avatar in the top-right corner
+3. Choose **Edit my profile**
+
+</Step>
+
+<Step title="Navigate to Apps">
+
+Go to the **Apps** section in the sidebar.
+
+</Step>
+
+<Step title="Create Token">
+
+1. Click **Create token** under "Access tokens"
+2. Name your token (e.g., "Work MacBook")
+3. Set the token type to **Courier**
+4. Click **Create token**
+
+<Warning>
+Your token will only be displayed once. Copy and store it securely.
+</Warning>
+
+</Step>
+
+<Step title="Login to Courier">
+
+Create a temporary file with your access token and login:
+
+```bash
+echo "your-token-here" > token.txt
+courier login --token < token.txt
+rm token.txt
+```
+
+</Step>
+
+</Steps>
+
+Once configured, you're ready to start pushing and pulling projects.
+
+<Info>
+Complete the [getting started guide](/courier/getting-started) to learn how to start building your first project.
+</Info>
+
+## Upgrade Courier
+
+To upgrade to the latest version of Courier:
+
+```bash
+brew upgrade --cask courier
+```
+
+<Note>
+Regularly updating ensures you have the latest features and bug fixes.
+</Note>
+
+## Using Firefox with Courier
+
+If you use Firefox for local development with `courier dev`, you need to install **NSS** (Network Security Services).
+
+NSS is a set of libraries designed to support cross-platform development of security-enabled client and server applications.
+
+### Install NSS on macOS
+
+```bash
+brew install nss
+```
+
+After installation, `courier dev` will work properly with Firefox.
+
+## Verify Installation
+
+Check that Courier is installed correctly:
+
+```bash
+courier version
+```
+
+This should display the current version of Courier.
+
+## Troubleshooting
+
+### Command Not Found
+
+If you get a "command not found" error after installation:
+
+1. Close and reopen your terminal
+2. Verify Homebrew is in your PATH:
+   ```bash
+   echo $PATH
+   ```
+3. Try running:
+   ```bash
+   brew doctor
+   ```
+
+### Permission Issues
+
+If you encounter permission errors:
+
+```bash
+sudo chown -R $(whoami) /usr/local/Caskroom
+brew install --cask blutui/courier/courier
+```
+
+### Homebrew Not Installed
+
+If you don't have Homebrew, install it first:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Getting Started" href="/courier/getting-started">
+    Learn how to use Courier with your first project
+  </Card>
+  
+  <Card title="Courier Commands" href="/courier/commands">
+    Explore all available Courier commands
+  </Card>
+  
+  <Card title="Create a Project" href="/quickstart">
+    Follow the quickstart guide
+  </Card>
+  
+  <Card title="Cassettes" href="/core-concepts/cassettes">
+    Learn about managing multiple site versions
+  </Card>
+</CardGroup>

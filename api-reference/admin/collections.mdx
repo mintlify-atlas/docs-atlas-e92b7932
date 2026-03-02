@@ -1,0 +1,247 @@
+---
+title: 'Collections'
+description: 'Manage collections for your project'
+api: 'GET https://{handle}.blutui.com/admin/api/collections'
+---
+
+## List all collections
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+<ParamField query="expand" type="string[]">
+  Expand the response for the given items. Expand array accepts `list`.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.collections.list()
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/collections' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseField name="object" type="string">
+  This will always contain `list` for this endpoint.
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  An array of up to `limit` collection resources. If no collections are available, an empty array is returned.
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Additional information about the list.
+</ResponseField>
+
+---
+
+## Create collection
+
+<api>POST https://{handle}.blutui.com/admin/api/collections</api>
+
+<ParamField body="name" type="string" required>
+  The name of the collection.
+</ParamField>
+
+<ParamField body="handle" type="string" required>
+  The unique handle for this collection.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.collections.create({
+  name: 'Products',
+  handle: 'products',
+})
+```
+
+```bash cURL
+curl -X POST 'https://{handle}.blutui.com/admin/api/collections' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "name": "Products",
+  "handle": "products"
+}'
+```
+</CodeGroup>
+
+<ResponseField name="id" type="string">
+  The unique identifier for this collection.
+</ResponseField>
+
+<ResponseField name="object" type="string">
+  This will always contain `collection` for this endpoint.
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  The name of this collection.
+</ResponseField>
+
+<ResponseField name="handle" type="string">
+  The unique handle for this collection.
+</ResponseField>
+
+<ResponseField name="fields" type="array">
+  The list of fields for this collection.
+</ResponseField>
+
+<ResponseField name="fields[].id" type="string">
+  The unique identifier for the collection field.
+</ResponseField>
+
+<ResponseField name="fields[].name" type="string">
+  The name of the collection field.
+</ResponseField>
+
+<ResponseField name="fields[].label" type="string">
+  The user friendly label of the collection field.
+</ResponseField>
+
+<ResponseField name="fields[].type" type="string">
+  The type of the collection field.
+</ResponseField>
+
+<ResponseField name="fields[].default_value" type="string | null">
+  The default value of the collection field.
+</ResponseField>
+
+<ResponseField name="fields[].help_text" type="string | null">
+  The description of what the collection field is for.
+</ResponseField>
+
+<ResponseField name="fields[].required" type="boolean">
+  Whether the collection field is required or not.
+</ResponseField>
+
+<ResponseField name="fields[].order" type="number">
+  The order of the collection field.
+</ResponseField>
+
+<ResponseField name="links" type="array">
+  The list of links for this collection.
+</ResponseField>
+
+<ResponseField name="parent_links" type="array">
+  The list of parent links for this collection.
+</ResponseField>
+
+<ResponseField name="deleted_at" type="string | null">
+  The date and time when the collection was deleted.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  The date and time when the collection was created.
+</ResponseField>
+
+<ResponseField name="updated_at" type="string">
+  The date and time when the collection was updated.
+</ResponseField>
+
+---
+
+## Retrieve collection
+
+<api>GET https://{handle}.blutui.com/admin/api/collections/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the collection to retrieve.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.collections.get('collection-id')
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/collections/collection-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Update collection
+
+<api>PATCH https://{handle}.blutui.com/admin/api/collections/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the collection to update.
+</ParamField>
+
+<ParamField body="name" type="string">
+  The name of the collection.
+</ParamField>
+
+<ParamField body="handle" type="string">
+  The unique handle for this collection.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.collections.update('collection-id', {
+  name: 'Updated Products',
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://{handle}.blutui.com/admin/api/collections/collection-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "name": "Updated Products"
+}'
+```
+</CodeGroup>
+
+---
+
+## Remove collection
+
+<api>DELETE https://{handle}.blutui.com/admin/api/collections/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the collection to remove.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.collections.remove('collection-id')
+```
+
+```bash cURL
+curl -X DELETE 'https://{handle}.blutui.com/admin/api/collections/collection-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>

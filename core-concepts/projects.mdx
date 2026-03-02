@@ -1,0 +1,207 @@
+---
+title: Projects
+description: Understanding Blutui projects, project structure, and development vs production environments
+---
+
+Projects are the fundamental building blocks of Blutui. Each project represents a complete website with its own configuration, content, and design.
+
+## What is a Project?
+
+A Blutui project is a self-contained website that includes:
+
+- **Templates and layouts** - Your HTML/Canvas files that define page structure
+- **Static assets** - CSS, JavaScript, images, and other files
+- **Collections** - Structured data like products, team members, or blog posts
+- **Canopy content** - Page-specific editable elements
+- **Configuration** - Project settings, domains, and cassette information
+
+## Development vs Production
+
+### Development Projects
+
+Development projects are:
+
+- **Free to create** - No monthly charges
+- **Password protected** - Accessible only with the development password
+- **Perfect for testing** - Experiment without affecting live sites
+- **Unlimited** - Create as many as you need
+
+### Production Projects
+
+When you're ready to go live:
+
+1. Publish your project from the Agency Console
+2. A recurring monthly fee applies
+3. Remove the password protection
+4. Connect a custom domain
+5. Your site becomes publicly accessible
+
+<Info>
+You can develop and test freely in development mode, then publish only when you're ready to launch.
+</Info>
+
+## Project Structure
+
+Every Blutui project follows a consistent file structure with two required directories:
+
+```bash
+[project-handle]/
+├── public/
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   └── ... (other static assets)
+└── views/
+    ├── layouts/
+    ├── templates/
+    ├── components/
+    └── ... (custom directories)
+```
+
+### The `public/` Directory
+
+The `public/` directory contains all publicly accessible static assets:
+
+- **CSS files** - Compiled stylesheets
+- **JavaScript files** - Client-side scripts
+- **Images** - Photos, icons, graphics
+- **Fonts** - Custom web fonts
+- **PDFs and documents** - Downloadable files
+
+<Note>
+Files in the `public/` directory are served directly to browsers and can be referenced in your templates.
+</Note>
+
+### The `views/` Directory
+
+The `views/` directory is where your front-end logic lives:
+
+#### `views/layouts/`
+
+Layout files define the structure for pages created in the dashboard. When you create a page in the Blutui dashboard, you link it to a layout file.
+
+```canvas views/layouts/default.canvas
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="/css/main.css">
+  </head>
+  <body>
+    {% block body %}{% endblock %}
+  </body>
+</html>
+```
+
+#### `views/templates/`
+
+Template files provide reusable structures:
+
+- **default.html** - Base structure for most pages
+- **404.html** - Custom "Page Not Found" page
+- Custom templates for specific page types
+
+#### `views/components/`
+
+Reusable components like headers, footers, and sections:
+
+```canvas views/components/header.canvas
+<header class="bg-slate-900 text-white p-6">
+  <nav>
+    {% for item in navigation %}
+      <a href="{{ item.url }}">{{ item.title }}</a>
+    {% endfor %}
+  </nav>
+</header>
+```
+
+<Info>
+You can create custom directories within `views/` to organize your components however you like.
+</Info>
+
+## Creating Pages
+
+There are two ways to create pages in Blutui:
+
+### 1. Through the Dashboard
+
+1. Open your project in the [Agency Console](https://console.blutui.com)
+2. Navigate to **Pages** in the sidebar
+3. Click **Create page**
+4. Enter the page details (title, URL, layout)
+5. Select a layout file from `views/layouts/`
+6. Save and publish
+
+### 2. Programmatically with Canvas
+
+Create template files that render content dynamically based on collections or other data sources.
+
+## Managing Projects with Courier
+
+Courier synchronizes only the `public/` and `views/` directories:
+
+<CodeGroup>
+
+```bash Pull project files
+courier pull
+```
+
+```bash Push local changes
+courier push
+```
+
+```bash Watch for changes
+courier dev
+```
+
+</CodeGroup>
+
+<Warning>
+Any files outside `public/` and `views/` directories will not be synced by Courier.
+</Warning>
+
+## Project Configuration
+
+Each project has a `courier.json` file that defines:
+
+```json courier.json
+{
+  "$schema": "https://dev.blutui.com/schemas/v1/schema.json",
+  "cassette": "main",
+  "handle": "your-project-handle"
+}
+```
+
+- **handle** - Your unique project identifier
+- **cassette** - The active cassette (version) you're working on
+- **$schema** - JSON schema for validation
+
+## Example Project
+
+For a complete working example, check out the [Burgertorium starter project](https://github.com/blutui/burgertorium) on GitHub. It demonstrates:
+
+- Proper project structure
+- Layout and template usage
+- Component organization
+- Integration with Tailwind CSS
+- Canopy and Collections implementation
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Learn About Cassettes" href="/core-concepts/cassettes">
+    Manage multiple versions of your website
+  </Card>
+  
+  <Card title="Explore Canopy" href="/core-concepts/canopy">
+    Create editable content elements
+  </Card>
+  
+  <Card title="Work with Collections" href="/core-concepts/collections">
+    Build structured, reusable data
+  </Card>
+  
+  <Card title="Canvas Documentation" href="/canvas/getting-started/overview">
+    Master the Blutui templating engine
+  </Card>
+</CardGroup>

@@ -1,0 +1,407 @@
+---
+title: Collections
+description: Create and manage structured, reusable data for your Blutui projects
+---
+
+Collections are the primary method for managing structured, reusable data within Blutui. They allow you to define data schemas using a wide range of field types, making it easy to create dynamic content like staff profiles, product listings, blog posts, and more.
+
+## What are Collections?
+
+Collections are structured data sets that:
+
+- **Define reusable schemas** - Create field structures that can be reused across multiple entries
+- **Support multiple field types** - Text, images, dates, rich text, and more
+- **Are globally accessible** - Use collection data across any page or template
+- **Are managed in the dashboard** - Content editors can add, edit, and delete entries without code
+
+<Info>
+Use Collections for reusable, structured data. Use [Canopy](/core-concepts/canopy) for page-specific editable content.
+</Info>
+
+## Collections vs Canopy
+
+| Feature | Collections | Canopy |
+|---------|-------------|--------|
+| **Scope** | Global/reusable | Page-specific |
+| **Use case** | Products, team members, blog posts | Hero sections, page content |
+| **Repeatability** | Multiple entries | One per page |
+| **Structure** | Complex schemas with multiple fields | Simple elements |
+| **Editor interface** | Dashboard forms | Visual on-page editor |
+
+## Creating Your First Collection
+
+<Steps>
+
+<Step title="Open Collections in Dashboard">
+
+1. Open your project from the [Blutui Agency Console](https://console.blutui.com)
+2. Navigate to **Collections** in the sidebar
+3. Click **Create collection**
+
+</Step>
+
+<Step title="Define Collection Fields">
+
+For this example, we'll create a **Staff** collection:
+
+| Field Type | Display Name | Attribute Name |
+|------------|--------------|----------------|
+| Text | Name | name |
+| Text Area | Biography | bio |
+| Image | Photo | photo |
+
+<Note>
+The **Attribute Name** is used in your code to reference the field (e.g., `entry.name`, `entry.bio`).
+</Note>
+
+</Step>
+
+<Step title="Add Collection Entries">
+
+1. After creating the collection, click **Add entry**
+2. Fill in the fields for each staff member
+3. Save the entry
+4. Repeat for all team members
+
+</Step>
+
+<Step title="Display Collection in Templates">
+
+Create `views/components/staff.canvas`:
+
+```canvas views/components/staff.canvas
+{% set collection = cms.collection('staff') %}
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+  {% for entry in collection %}
+    <div class="text-center">
+      <img src="{{ entry.photo }}" alt="{{ entry.name }}" class="w-32 h-32 rounded-full mx-auto mb-4" />
+      <h3 class="text-xl font-semibold">{{ entry.name }}</h3>
+      <div class="text-slate-600 mt-2">{{ entry.bio | raw }}</div>
+    </div>
+  {% endfor %}
+</div>
+```
+
+</Step>
+
+<Step title="Include in Your Page">
+
+Include the component in any page or layout:
+
+```canvas
+{% include 'components/staff.canvas' %}
+```
+
+</Step>
+
+</Steps>
+
+## Available Field Types
+
+Collections support a wide range of field types:
+
+### Text Fields
+
+**Text** - Single-line text input for short strings
+```
+Display Name: Product Name
+Attribute Name: product_name
+```
+
+**Text Area** - Multi-line text input for longer content
+```
+Display Name: Description
+Attribute Name: description
+```
+
+**Rich Text** - Formatted text with styling, links, and more
+```
+Display Name: Article Content
+Attribute Name: content
+```
+
+### Media Fields
+
+**File** - Upload documents, images, or other media
+```
+Display Name: Product Image
+Attribute Name: image
+Allow multiple: Yes/No
+```
+
+**Image** - Dedicated image upload field
+```
+Display Name: Profile Photo
+Attribute Name: photo
+```
+
+### Data Fields
+
+**Date & Time** - Date and time picker
+```
+Display Name: Event Date
+Attribute Name: event_date
+```
+
+**Date** - Date picker only
+```
+Display Name: Publish Date
+Attribute Name: publish_date
+```
+
+**Time** - Time picker only
+```
+Display Name: Event Time
+Attribute Name: event_time
+```
+
+**Number** - Numeric input with optional min/max/step
+```
+Display Name: Price
+Attribute Name: price
+Minimum: 0
+Step: 0.01
+```
+
+### Contact Fields
+
+**Email** - Email address validation
+```
+Display Name: Contact Email
+Attribute Name: email
+```
+
+**Phone** - Phone number input
+```
+Display Name: Phone Number
+Attribute Name: phone
+```
+
+**URL** - Web address validation
+```
+Display Name: Website
+Attribute Name: website
+```
+
+### Choice Fields
+
+**Select** - Dropdown with custom options
+```
+Display Name: Department
+Attribute Name: department
+Options: Sales, Marketing, Engineering, Support
+```
+
+**Radio** - Radio buttons with custom values
+```
+Display Name: Status
+Attribute Name: status
+Options: Active, Inactive, Pending
+```
+
+**Checkbox** - Multiple checkboxes
+```
+Display Name: Features
+Attribute Name: features
+Options: WiFi, Parking, Pet Friendly, Pool
+```
+
+### Other Fields
+
+**Color** - Color picker
+```
+Display Name: Brand Color
+Attribute Name: brand_color
+```
+
+## Common Collection Examples
+
+### Team Members
+
+```canvas views/components/team.canvas
+{% set team = cms.collection('team') %}
+
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+  {% for member in team %}
+    <div class="bg-white rounded-lg shadow p-6">
+      <img src="{{ member.photo }}" alt="{{ member.name }}" class="w-full h-48 object-cover rounded-lg mb-4" />
+      <h3 class="text-lg font-semibold">{{ member.name }}</h3>
+      <p class="text-sm text-slate-500">{{ member.position }}</p>
+      <p class="text-sm mt-2">{{ member.bio }}</p>
+      <a href="mailto:{{ member.email }}" class="text-blue-600 text-sm">{{ member.email }}</a>
+    </div>
+  {% endfor %}
+</div>
+```
+
+### Products
+
+```canvas views/components/products.canvas
+{% set products = cms.collection('products') %}
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+  {% for product in products %}
+    <div class="border rounded-lg overflow-hidden">
+      <img src="{{ product.image }}" alt="{{ product.name }}" class="w-full h-64 object-cover" />
+      <div class="p-6">
+        <h3 class="text-xl font-bold mb-2">{{ product.name }}</h3>
+        <p class="text-slate-600 mb-4">{{ product.description }}</p>
+        <div class="flex justify-between items-center">
+          <span class="text-2xl font-bold">${{ product.price }}</span>
+          <a href="{{ product.url }}" class="bg-blue-600 text-white px-4 py-2 rounded">Buy Now</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+```
+
+### Blog Posts
+
+```canvas views/blog/index.canvas
+{% set posts = cms.collection('blog_posts') %}
+
+<div class="max-w-4xl mx-auto">
+  {% for post in posts %}
+    <article class="mb-12 pb-12 border-b">
+      <img src="{{ post.featured_image }}" alt="{{ post.title }}" class="w-full h-96 object-cover rounded-lg mb-6" />
+      <h2 class="text-3xl font-bold mb-2">
+        <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
+      </h2>
+      <div class="text-sm text-slate-500 mb-4">
+        {{ post.publish_date | date('F j, Y') }} • {{ post.author }}
+      </div>
+      <div class="text-lg text-slate-700">
+        {{ post.excerpt }}
+      </div>
+      <a href="/blog/{{ post.slug }}" class="text-blue-600 font-semibold mt-4 inline-block">Read More →</a>
+    </article>
+  {% endfor %}
+</div>
+```
+
+### Testimonials
+
+```canvas views/components/testimonials.canvas
+{% set testimonials = cms.collection('testimonials') %}
+
+<div class="bg-slate-100 py-16">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {% for testimonial in testimonials %}
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <div class="flex items-center mb-4">
+            <img src="{{ testimonial.photo }}" alt="{{ testimonial.name }}" class="w-16 h-16 rounded-full mr-4" />
+            <div>
+              <h3 class="font-semibold">{{ testimonial.name }}</h3>
+              <p class="text-sm text-slate-500">{{ testimonial.company }}</p>
+            </div>
+          </div>
+          <p class="text-slate-700 italic">"{{ testimonial.quote }}"</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+```
+
+## Advanced Collection Usage
+
+### Filtering Collections
+
+```canvas
+{% set activeProducts = cms.collection('products') | filter(p => p.status == 'active') %}
+
+{% for product in activeProducts %}
+  <!-- Display only active products -->
+{% endfor %}
+```
+
+### Sorting Collections
+
+```canvas
+{% set sortedPosts = cms.collection('blog_posts') | sort((a, b) => b.publish_date <=> a.publish_date) %}
+
+{% for post in sortedPosts %}
+  <!-- Display posts in reverse chronological order -->
+{% endfor %}
+```
+
+### Limiting Results
+
+```canvas
+{% set recentPosts = cms.collection('blog_posts') | slice(0, 3) %}
+
+<h2>Recent Posts</h2>
+{% for post in recentPosts %}
+  <!-- Display only the 3 most recent posts -->
+{% endfor %}
+```
+
+## Best Practices
+
+### Use Clear Attribute Names
+
+Choose descriptive, code-friendly attribute names:
+
+```
+Good: product_name, featured_image, publish_date
+Avoid: name1, img, date
+```
+
+### Plan Your Schema
+
+Before creating a collection, plan all the fields you'll need:
+
+1. List all the data points you need to capture
+2. Choose appropriate field types for each
+3. Consider required vs optional fields
+4. Think about default values
+
+### Use Required Fields Wisely
+
+Mark fields as required only when they're essential:
+
+- **Required**: name, title, main_image
+- **Optional**: bio, website, secondary_image
+
+### Provide Help Text
+
+Add help text to guide content editors:
+
+```
+Field: URL Slug
+Help text: "Used in the page URL. Use lowercase letters, numbers, and hyphens only."
+```
+
+### Organize with Multiple Collections
+
+Don't try to fit everything into one collection. Create separate collections for different content types:
+
+- `team_members` - Staff profiles
+- `products` - Product listings
+- `blog_posts` - Blog articles
+- `testimonials` - Customer reviews
+- `faq_items` - Frequently asked questions
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Input Types Reference" href="/components/input-types">
+    Detailed reference for all collection field types
+  </Card>
+  
+  <Card title="Canvas Filters" href="/canvas/getting-started/filters-functions">
+    Learn how to filter and manipulate collection data
+  </Card>
+  
+  <Card title="Canopy Elements" href="/core-concepts/canopy">
+    Create page-specific editable content
+  </Card>
+  
+  <Card title="Projects" href="/core-concepts/projects">
+    Understand Blutui project structure
+  </Card>
+</CardGroup>

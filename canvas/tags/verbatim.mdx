@@ -1,0 +1,18 @@
+---
+title: verbatim
+description: Mark sections as raw text that should not be parsed.
+---
+
+The **verbatim** tag marks sections as being raw text that should not be parsed. For example to put Canvas syntax as example into a template you can use this snippet:
+
+```canvas
+{% verbatim %}
+  <ul>
+    {% for item in list %}
+      <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+{% endverbatim %}
+```
+
+This is useful when you need to display Canvas code examples in your templates without having them executed.

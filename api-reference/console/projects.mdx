@@ -1,0 +1,346 @@
+---
+title: 'Projects'
+description: 'Manage projects for your agency'
+api: 'GET https://api.blutui.com/v1/agencies/{username}/projects'
+---
+
+## List all projects
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+<ParamField query="expand" type="string[]">
+  Expand the response for the given items. Expand array accepts `primary_domain`.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').projects.list()
+```
+
+```bash cURL
+curl -X GET 'https://api.blutui.com/v1/agencies/studio/projects' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseField name="object" type="string">
+  This will always contain `list` for this endpoint.
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  An array of up to `limit` project resources. If no projects are available, an empty array is returned.
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Additional information about the list.
+</ResponseField>
+
+---
+
+## Create project
+
+<api>POST https://api.blutui.com/v1/agencies/{username}/projects</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').projects.create({
+  name: 'My Project',
+  handle: 'my-project'
+})
+```
+
+```bash cURL
+curl -X POST 'https://api.blutui.com/v1/agencies/studio/projects' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Retrieve project
+
+<api>GET https://api.blutui.com/v1/agencies/{username}/projects/{id}</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the project to retrieve.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').projects.get('project-id')
+```
+
+```bash cURL
+curl -X GET 'https://api.blutui.com/v1/agencies/studio/projects/project-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Update project
+
+<api>PATCH https://api.blutui.com/v1/agencies/{username}/projects/{id}</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the project to update.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').projects.update('project-id', {
+  name: 'Updated Project'
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://api.blutui.com/v1/agencies/studio/projects/project-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Search projects
+
+<api>GET https://api.blutui.com/v1/agencies/{username}/projects/search</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').projects.search({
+  query: 'project'
+})
+```
+
+```bash cURL
+curl -X GET 'https://api.blutui.com/v1/agencies/studio/projects/search?query=project' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Archived projects
+
+<api>GET https://api.blutui.com/v1/agencies/{username}/projects/archived</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').projects.archived()
+```
+
+```bash cURL
+curl -X GET 'https://api.blutui.com/v1/agencies/studio/projects/archived' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Publish project
+
+<api>POST https://api.blutui.com/v1/agencies/{username}/projects/{id}/publish</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the project to publish.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').projects.publish('project-id')
+```
+
+```bash cURL
+curl -X POST 'https://api.blutui.com/v1/agencies/studio/projects/project-id/publish' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Unpublish project
+
+<api>POST https://api.blutui.com/v1/agencies/{username}/projects/{id}/unpublish</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the project to unpublish.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').projects.unpublish('project-id')
+```
+
+```bash cURL
+curl -X POST 'https://api.blutui.com/v1/agencies/studio/projects/project-id/unpublish' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Republish project
+
+<api>POST https://api.blutui.com/v1/agencies/{username}/projects/{id}/republish</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the project to republish.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').projects.republish('project-id')
+```
+
+```bash cURL
+curl -X POST 'https://api.blutui.com/v1/agencies/studio/projects/project-id/republish' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Restore project
+
+<api>POST https://api.blutui.com/v1/agencies/{username}/projects/{id}/restore</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the project to restore.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').projects.restore('project-id')
+```
+
+```bash cURL
+curl -X POST 'https://api.blutui.com/v1/agencies/studio/projects/project-id/restore' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Remove project
+
+<api>DELETE https://api.blutui.com/v1/agencies/{username}/projects/{id}</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the project to remove.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').projects.remove('project-id')
+```
+
+```bash cURL
+curl -X DELETE 'https://api.blutui.com/v1/agencies/studio/projects/project-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>

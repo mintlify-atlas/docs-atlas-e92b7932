@@ -1,33 +1,99 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'API Reference'
+description: 'Comprehensive REST API documentation for Blutui platform'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Overview
 
-## Welcome
+Blutui provides a comprehensive REST API to programmatically manage your projects, content, and infrastructure. The API is organized into three main categories:
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+- **Admin API** - Manage project content including blogs, posts, collections, forms, and more
+- **Console API** - Manage agency resources, projects, domains, and team members
+- **User API** - Access authenticated user information
+- **Agencies API** - Manage agency settings and information
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+## Base URLs
 
-## Authentication
+All API requests use HTTPS. HTTP requests are not supported.
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+<CodeGroup>
+```text Admin API
+https://{handle}.blutui.com/admin/api
 ```
+
+```text Console API
+https://api.blutui.com/v1
+```
+</CodeGroup>
+
+Replace `{handle}` with your project's unique handle for Admin API requests.
+
+## SDKs
+
+Blutui provides official SDKs to make integration easier:
+
+### Node.js SDK
+
+Install the official Node.js SDK:
+
+```bash
+npm install blutui
+```
+
+Initialize the SDK:
+
+```javascript
+import Blutui from 'blutui'
+
+const blutui = new Blutui('your-access-token')
+
+// Admin API
+await blutui.project('handle').admin.blogs.list()
+
+// Console API
+await blutui.agency('username').projects.list()
+
+// User API
+await blutui.user.get()
+```
+
+## Response Format
+
+All API responses use JSON format. Successful responses return a `200` status code along with the requested data. List endpoints return paginated results with metadata.
+
+## Error Handling
+
+The API uses standard HTTP status codes:
+
+- `200` - Success
+- `204` - No Content (resource doesn't exist)
+- `401` - Unauthorized (invalid or missing access token)
+- `403` - Forbidden (insufficient permissions)
+- `404` - Not Found
+- `422` - Validation Error
+
+## Rate Limiting
+
+API requests are subject to rate limiting to ensure platform stability. Rate limit information is included in response headers.
+
+## Getting Started
+
+1. [Generate an access token](https://console.blutui.com/profile) from your Blutui account
+2. Review the authentication documentation
+3. Choose the appropriate API for your use case
+4. Make your first API request
+
+<CardGroup cols={2}>
+  <Card title="Admin API" icon="code" href="/api-reference/admin/overview">
+    Manage project content and resources
+  </Card>
+  <Card title="Console API" icon="terminal" href="/api-reference/console/overview">
+    Manage agencies, projects, and domains
+  </Card>
+  <Card title="Authentication" icon="key" href="/api-reference/authentication">
+    Learn how to authenticate your requests
+  </Card>
+  <Card title="Node.js SDK" icon="node" href="#sdks">
+    Use the official Node.js SDK
+  </Card>
+</CardGroup>

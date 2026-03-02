@@ -1,0 +1,324 @@
+---
+title: Cassettes
+description: Version control for your website's front-end, allowing you to manage and switch between different designs
+---
+
+Blutui Cassettes are like a version control system for your website's front-end. They provide a simple way to manage and switch between different website designs for a single project.
+
+## What are Cassettes?
+
+Cassettes allow you to:
+
+- **Maintain multiple versions** of your website's design and layout
+- **Switch between versions instantly** without downtime
+- **Develop new features** without affecting your live site
+- **Create seasonal themes** (e.g., Christmas, Halloween) that you can activate on demand
+- **Test major redesigns** in a safe environment before going live
+
+<Info>
+Every cassette contains its own `public/` and `views/` directories with independent front-end code.
+</Info>
+
+## How Cassettes Work
+
+Each Blutui project can have multiple cassettes, but only one is **active** at a time. The active cassette is what visitors see when they visit your website.
+
+### Cassette Structure
+
+Each cassette contains:
+
+- **`public/` directory** - CSS, JavaScript, images, and other static assets
+- **`views/` directory** - Canvas templates, layouts, and components
+- **Independent front-end logic** - Each cassette can have completely different designs
+
+<Warning>
+Courier only pushes and pulls the `public/` and `views/` directories. Changes outside these directories are not included in cassettes.
+</Warning>
+
+### Configuration
+
+The `cassette` attribute in your `courier.json` file determines which cassette you're working on:
+
+```json courier.json
+{
+  "$schema": "https://dev.blutui.com/schemas/v1/schema.json",
+  "cassette": "main",
+  "handle": "your-project-handle"
+}
+```
+
+By changing the `cassette` value, you can switch between different versions of your site for local development.
+
+## Typical Cassette Workflow
+
+<Steps>
+
+<Step title="Duplicate an Existing Cassette">
+
+To create a new version (e.g., a Christmas theme):
+
+1. Open your project in the [Agency Console](https://console.blutui.com)
+2. Navigate to **Cassettes**
+3. Find the cassette you want to duplicate (usually your active cassette)
+4. Click **Duplicate**
+5. Name your new cassette (e.g., "christmas")
+
+This creates an identical copy of your project's front-end that you can modify independently.
+
+</Step>
+
+<Step title="Switch Cassettes Locally">
+
+Update your `courier.json` to work on the new cassette:
+
+```json courier.json
+{
+  "$schema": "https://dev.blutui.com/schemas/v1/schema.json",
+  "cassette": "christmas",
+  "handle": "your-project-handle"
+}
+```
+
+Then pull the cassette:
+
+```bash
+courier pull
+```
+
+</Step>
+
+<Step title="Develop and Test">
+
+Make your changes to the new cassette:
+
+- Update templates in `views/`
+- Modify styles in `public/css/`
+- Add seasonal images to `public/images/`
+
+Test locally using:
+
+```bash
+courier dev
+```
+
+Push changes when ready:
+
+```bash
+courier push
+```
+
+</Step>
+
+<Step title="Activate the Cassette">
+
+When you're ready to make the new cassette live:
+
+1. Go to the Agency Console
+2. Navigate to **Settings** → **Cassettes**
+3. Select your new cassette from the **Active Cassette** dropdown
+4. Click **Update**
+
+<Info>
+The change is immediate - your new design is visible to all visitors instantly.
+</Info>
+
+</Step>
+
+</Steps>
+
+## Example: Seasonal Themes
+
+Imagine you have a main website and want to create a Christmas version:
+
+### Main Cassette
+
+```json courier.json
+{
+  "$schema": "https://dev.blutui.com/schemas/v1/schema.json",
+  "cassette": "main",
+  "handle": "my-shop"
+}
+```
+
+```canvas views/components/banner.canvas
+<section class="bg-slate-900 text-white py-8">
+  <div class="mx-auto px-6">
+    {{ cms_heading('banner-main', {
+      element: 'h2',
+      value: 'Welcome to Our Store',
+      class: 'text-2xl font-semibold'
+    }) }}
+  </div>
+</section>
+```
+
+### Christmas Cassette
+
+```json courier.json
+{
+  "$schema": "https://dev.blutui.com/schemas/v1/schema.json",
+  "cassette": "christmas",
+  "handle": "my-shop"
+}
+```
+
+```canvas views/components/banner.canvas
+<section class="bg-gradient-to-r from-emerald-900 via-emerald-800 to-red-900 text-white py-8">
+  <div class="mx-auto px-6">
+    {{ cms_heading('banner-christmas', {
+      element: 'h2',
+      value: 'Merry Christmas & Happy Holidays',
+      class: 'text-2xl font-semibold text-emerald-50'
+    }) }}
+  </div>
+</section>
+```
+
+<Note>
+Notice the different Canopy handles (`banner-main` vs `banner-christmas`). Elements with the same handle share content across cassettes. Use different handles when you need different content.
+</Note>
+
+## Working with the Active Cassette
+
+Once a cassette is set to **Active**, it's recommended to develop new features on a **new cassette** created by duplicating the active one. This ensures your production site isn't affected by development work.
+
+### Pushing to Active Cassette
+
+If you attempt to push to an active cassette, Courier will warn you:
+
+```bash
+The "main" cassette is currently active. You cannot push to an active cassette.
+
+If you're feeling a little adventurous, use the "--allow-active" flag to bypass this check.
+```
+
+To bypass this protection (not recommended for production sites):
+
+```bash
+courier push --allow-active
+```
+
+<Warning>
+Pushing directly to the active cassette means any errors immediately affect your live site. Always develop on a separate cassette and test thoroughly before activating.
+</Warning>
+
+<Info>
+This warning doesn't apply to unpublished development projects. Once your site is live in production, the warning helps prevent accidental changes to the live site.
+</Info>
+
+## Canopy Content and Cassettes
+
+Canopy elements with the **same handle** share content across all cassettes. If you need different content in different cassettes, use unique handles:
+
+```canvas Main cassette
+{{ cms_heading('hero-title', {
+  value: 'Welcome to Our Site'
+}) }}
+```
+
+```canvas Christmas cassette
+{{ cms_heading('hero-title-christmas', {
+  value: 'Merry Christmas!'
+}) }}
+```
+
+If both cassettes used `hero-title`, editing the content in one cassette would change it in both.
+
+## Common Use Cases
+
+### Seasonal Campaigns
+
+Create cassettes for:
+- **Holiday seasons** (Christmas, Easter, Halloween)
+- **Sales events** (Black Friday, Summer Sale)
+- **Special occasions** (Anniversary, Product Launch)
+
+### A/B Testing
+
+Test different designs:
+- **Different layouts** for the same content
+- **Alternative navigation** structures
+- **Varied color schemes** and branding
+
+### Major Redesigns
+
+Safely develop major changes:
+- **Complete site redesign** without affecting the live site
+- **Test thoroughly** before making it active
+- **Instant rollback** if issues arise (just switch back to the previous cassette)
+
+### Client Previews
+
+Show clients design options:
+- Create multiple cassettes with different designs
+- Share staging URLs for each cassette
+- Activate the client's preferred version
+
+## Managing Cassettes in the Dashboard
+
+From the Agency Console, you can:
+
+1. **View all cassettes** for a project
+2. **Create new cassettes** from scratch or by duplicating
+3. **Set the active cassette** that visitors see
+4. **Delete unused cassettes** to keep things organized
+5. **Rename cassettes** for better organization
+
+## Best Practices
+
+### Use Descriptive Names
+
+Choose clear cassette names that indicate their purpose:
+
+```
+Good: main, christmas-2024, redesign-v2, black-friday
+Avoid: test, new, cassette1, temp
+```
+
+### Keep a Stable Main Cassette
+
+Maintain one cassette (usually "main") as your stable, production-ready version. Create new cassettes for experiments and seasonal changes.
+
+### Test Before Activating
+
+Always thoroughly test a cassette on staging before making it active:
+
+1. Push to the cassette
+2. Test on `https://your-project.blutui.com`
+3. Check all pages and features
+4. Only then activate in production
+
+### Document Your Cassettes
+
+Keep track of what each cassette is for:
+
+```
+main - Production site
+christmas-2024 - Holiday theme (Dec 1 - Jan 5)
+redesign-v2 - Testing new layout (in development)
+black-friday - Sale event (Nov 29 only)
+```
+
+### Clean Up Old Cassettes
+
+Regularly delete cassettes you no longer need to avoid confusion and keep your project organized.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Projects" href="/core-concepts/projects">
+    Learn more about Blutui project structure
+  </Card>
+  
+  <Card title="Courier Commands" href="/courier/commands">
+    Master the CLI commands for working with cassettes
+  </Card>
+  
+  <Card title="Canopy Elements" href="/core-concepts/canopy">
+    Understand how Canopy content works across cassettes
+  </Card>
+  
+  <Card title="Canvas Templates" href="/canvas/getting-started/overview">
+    Build templates for your cassettes
+  </Card>
+</CardGroup>

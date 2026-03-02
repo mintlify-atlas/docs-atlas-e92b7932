@@ -1,0 +1,369 @@
+---
+title: Getting Started with Courier
+description: Courier is a Blutui command-line interface tool to interact with your Blutui projects. Pull, push, and sync code effortlessly.
+---
+
+Courier is Blutui's command-line interface (CLI) tool that enables you to develop locally, sync changes automatically, and deploy your projects with simple commands.
+
+## What is Courier?
+
+Courier is a cross-platform CLI tool that:
+
+- **Syncs your local code** with Blutui cloud
+- **Watches for file changes** and pushes them automatically in dev mode
+- **Manages project configuration** with simple commands
+- **Works on macOS, Windows, and Linux**
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Local Development" icon="laptop-code">
+    Use `courier dev` to host your `public` folder locally, watch for changes in `views`, and automatically sync to Blutui cloud at `localhost:8080`
+  </Card>
+  
+  <Card title="Easy Deployment" icon="cloud-arrow-up">
+    Push code to your project with the simple `courier push` command
+  </Card>
+  
+  <Card title="Quick Setup" icon="rocket">
+    Get started with a new project using `courier pull` to download the latest code
+  </Card>
+  
+  <Card title="Cross-Platform" icon="laptop">
+    Works seamlessly on macOS, Windows, and many popular Linux distributions
+  </Card>
+</CardGroup>
+
+## Installation
+
+Choose your operating system:
+
+<CardGroup cols={3}>
+  <Card title="macOS" href="/courier/installation/macos">
+    Install via Homebrew
+  </Card>
+
+  <Card title="Windows" href="/courier/installation/windows">
+    Install via Scoop
+  </Card>
+
+  <Card title="Linux" href="/courier/installation/linux">
+    Available on many popular distributions
+  </Card>
+</CardGroup>
+
+## Start Using Courier
+
+<Steps>
+
+<Step title="Install Courier">
+
+Follow the installation guide for your operating system. For example, on macOS:
+
+```bash
+brew install --cask blutui/courier/courier
+```
+
+</Step>
+
+<Step title="Create a Courier Token">
+
+Generate an access token from your Agency Console:
+
+1. Login to [Agency Console](https://console.blutui.com)
+2. Click your avatar → **Edit my profile**
+3. Go to **Apps** section
+4. Click **Create token** under "Access tokens"
+5. Name your token (e.g., "Work MacBook")
+6. Set type to **Courier**
+7. Click **Create token** and copy it
+
+<Warning>
+Your token is only shown once. Save it securely before closing the dialog.
+</Warning>
+
+</Step>
+
+<Step title="Login to Courier">
+
+Create a temporary file with your token and login:
+
+```bash
+echo "your-token-here" > token.txt
+courier login --token < token.txt
+rm token.txt
+```
+
+If your token expires, use the same command to login again.
+
+</Step>
+
+<Step title="Link Your Project">
+
+Create a directory for your project and initialize Courier:
+
+```bash
+mkdir my-project
+cd my-project
+courier init your-project-handle
+```
+
+For example:
+
+```bash
+courier init sonic
+```
+
+This creates a `courier.json` configuration file:
+
+```json courier.json
+{
+  "$schema": "https://dev.blutui.com/schemas/v1/schema.json",
+  "cassette": "main",
+  "handle": "sonic"
+}
+```
+
+</Step>
+
+<Step title="Pull Project Code">
+
+Download your project files from Blutui:
+
+```bash
+courier pull
+```
+
+This pulls the `public/` and `views/` folders to your local machine.
+
+</Step>
+
+<Step title="Start Development Server">
+
+Run Courier in development mode:
+
+```bash
+courier dev
+```
+
+This will:
+- Host your `public` folder locally
+- Watch the `views` folder for changes
+- Automatically sync changes to Blutui
+- Make your project available at `https://localhost:8080`
+
+<Info>
+On first run, `courier dev` doesn't automatically push code - it starts monitoring for file changes.
+</Info>
+
+</Step>
+
+</Steps>
+
+## Essential Commands
+
+Here are the most commonly used Courier commands:
+
+### Initialize Project
+
+Create a `courier.json` config file:
+
+```bash
+courier init [project-handle]
+```
+
+### Pull Code
+
+Download the latest code from Blutui:
+
+```bash
+courier pull
+```
+
+### Push Code
+
+Upload your local changes to Blutui:
+
+```bash
+courier push
+```
+
+### Development Mode
+
+Watch for changes and auto-sync:
+
+```bash
+courier dev
+```
+
+### Open Project
+
+Open your project in the browser:
+
+```bash
+courier open
+```
+
+<Note>
+For a complete list of commands and options, see the [Courier Commands reference](/courier/commands).
+</Note>
+
+## Working with Cassettes
+
+Cassettes are Blutui's way of managing different versions of your website. You can specify which cassette to work on in your `courier.json`:
+
+```json courier.json
+{
+  "$schema": "https://dev.blutui.com/schemas/v1/schema.json",
+  "cassette": "christmas",
+  "handle": "your-project-handle"
+}
+```
+
+Change the `cassette` value to work on different versions:
+
+- `"main"` - Your primary production site
+- `"christmas"` - Seasonal holiday theme
+- `"redesign"` - Major redesign in progress
+
+After changing the cassette, run `courier pull` to download that cassette's files.
+
+<Info>
+Learn more about cassettes in the [Cassettes documentation](/core-concepts/cassettes).
+</Info>
+
+## Development Workflow
+
+Here's a typical development workflow with Courier:
+
+<Steps>
+
+<Step title="Pull Latest Code">
+
+Start by ensuring you have the latest code:
+
+```bash
+courier pull
+```
+
+</Step>
+
+<Step title="Start Dev Server">
+
+Launch the development server:
+
+```bash
+courier dev
+```
+
+</Step>
+
+<Step title="Make Changes">
+
+Edit files in `views/` or `public/`. Courier automatically syncs changes as you save.
+
+</Step>
+
+<Step title="Test Locally">
+
+View your changes at `https://localhost:8080/`
+
+</Step>
+
+<Step title="Push to Staging">
+
+When satisfied, push your changes:
+
+```bash
+courier push
+```
+
+Your changes are now live on your staging site at `https://your-project.blutui.com`
+
+</Step>
+
+</Steps>
+
+## What Gets Synced?
+
+Courier syncs only the `public/` and `views/` directories:
+
+```bash
+project/
+├── public/          # ✓ Synced
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── views/           # ✓ Synced
+│   ├── layouts/
+│   ├── templates/
+│   └── components/
+├── node_modules/    # ✗ Not synced
+├── package.json     # ✗ Not synced
+└── courier.json     # ✗ Not synced (local only)
+```
+
+<Warning>
+Changes outside `public/` and `views/` are not synced and won't be available when you run `courier pull`.
+</Warning>
+
+## Troubleshooting
+
+### Token Expired
+
+If your token expires, login again:
+
+```bash
+courier login --token < token.txt
+```
+
+### Port Already in Use
+
+If port 8080 is already in use, Courier will display an error. Stop other services using that port or change Courier's port in your project settings.
+
+### Changes Not Syncing
+
+Ensure:
+1. You're in the correct project directory
+2. `courier.json` exists with the correct project handle
+3. You're running `courier dev` or have run `courier push`
+4. Your changes are in `public/` or `views/` directories
+
+### Firefox SSL Issues
+
+On macOS or Linux, if using Firefox with `courier dev`, install NSS (Network Security Services):
+
+```bash macOS
+brew install nss
+```
+
+```bash Linux
+# Debian/Ubuntu
+apt install libnss3-tools
+
+# Fedora/RHEL
+yum install nss-tools
+
+# openSUSE
+zypper install mozilla-nss-tools
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Courier Commands" href="/courier/commands">
+    Complete reference for all Courier commands
+  </Card>
+  
+  <Card title="Projects" href="/core-concepts/projects">
+    Learn about Blutui project structure
+  </Card>
+  
+  <Card title="Cassettes" href="/core-concepts/cassettes">
+    Manage multiple versions of your website
+  </Card>
+  
+  <Card title="Canvas Templates" href="/canvas/getting-started/overview">
+    Start building templates
+  </Card>
+</CardGroup>

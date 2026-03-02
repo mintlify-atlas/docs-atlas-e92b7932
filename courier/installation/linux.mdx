@@ -1,0 +1,316 @@
+---
+title: Install Courier on Linux
+description: Install Blutui Courier CLI on popular Linux distributions
+---
+
+Courier is available on many popular Linux distributions including Debian, Ubuntu, Fedora, CentOS, and openSUSE.
+
+<Info>
+After installing Courier on Linux, complete the [getting started guide](/courier/getting-started) to learn how to start building your first project.
+</Info>
+
+## Debian/Ubuntu
+
+<Steps>
+
+<Step title="Download the Package">
+
+Download the `.deb` file from the [downloads page](https://blutui.com/developers/courier).
+
+</Step>
+
+<Step title="Install Courier">
+
+Install the downloaded package:
+
+```bash
+sudo apt install ./courier_*_linux_amd64.deb
+```
+
+</Step>
+
+<Step title="Verify Installation">
+
+Check that Courier is installed:
+
+```bash
+courier version
+```
+
+</Step>
+
+</Steps>
+
+### Upgrade on Debian/Ubuntu
+
+To upgrade, download the latest `.deb` file and install it:
+
+```bash
+sudo apt install ./courier_*_linux_amd64.deb
+```
+
+## Fedora
+
+<Steps>
+
+<Step title="Download the Package">
+
+Download the `.rpm` file from the [downloads page](https://blutui.com/developers/courier).
+
+</Step>
+
+<Step title="Install Courier">
+
+Install the downloaded package:
+
+```bash
+sudo dnf install ./courier_*_linux_amd64.rpm
+```
+
+</Step>
+
+<Step title="Verify Installation">
+
+Check that Courier is installed:
+
+```bash
+courier version
+```
+
+</Step>
+
+</Steps>
+
+### Upgrade on Fedora
+
+To upgrade, download the latest `.rpm` file and install it:
+
+```bash
+sudo dnf install ./courier_*_linux_amd64.rpm
+```
+
+## CentOS
+
+<Steps>
+
+<Step title="Download the Package">
+
+Download the `.rpm` file from the [downloads page](https://blutui.com/developers/courier).
+
+</Step>
+
+<Step title="Install Courier">
+
+Install the downloaded package:
+
+```bash
+sudo yum localinstall ./courier_*_linux_amd64.rpm
+```
+
+</Step>
+
+<Step title="Verify Installation">
+
+Check that Courier is installed:
+
+```bash
+courier version
+```
+
+</Step>
+
+</Steps>
+
+### Upgrade on CentOS
+
+To upgrade, download the latest `.rpm` file and install it:
+
+```bash
+sudo yum localinstall ./courier_*_linux_amd64.rpm
+```
+
+## openSUSE/SUSE
+
+<Steps>
+
+<Step title="Download the Package">
+
+Download the `.rpm` file from the [downloads page](https://blutui.com/developers/courier).
+
+</Step>
+
+<Step title="Install Courier">
+
+Install the downloaded package:
+
+```bash
+sudo zypper in ./courier_*_linux_amd64.rpm
+```
+
+</Step>
+
+<Step title="Verify Installation">
+
+Check that Courier is installed:
+
+```bash
+courier version
+```
+
+</Step>
+
+</Steps>
+
+### Upgrade on openSUSE/SUSE
+
+To upgrade, download the latest `.rpm` file and install it:
+
+```bash
+sudo zypper in ./courier_*_linux_amd64.rpm
+```
+
+## Create a Courier Token
+
+Before using Courier, you need to generate a Blutui access token:
+
+<Steps>
+
+<Step title="Access Your Profile">
+
+1. Login to your [Agency Console](https://console.blutui.com)
+2. Click your avatar in the top-right corner
+3. Choose **Edit my profile**
+
+</Step>
+
+<Step title="Navigate to Apps">
+
+Go to the **Apps** section in the sidebar.
+
+</Step>
+
+<Step title="Create Token">
+
+1. Click **Create token** under "Access tokens"
+2. Name your token (e.g., "Linux Workstation")
+3. Set the token type to **Courier**
+4. Click **Create token**
+
+<Warning>
+Your token will only be displayed once. Copy and store it securely.
+</Warning>
+
+</Step>
+
+<Step title="Login to Courier">
+
+Create a temporary file with your access token and login:
+
+```bash
+echo "your-token-here" > token.txt
+courier login --token < token.txt
+rm token.txt
+```
+
+</Step>
+
+</Steps>
+
+Once configured, you're ready to start pushing and pulling projects.
+
+<Info>
+Complete the [getting started guide](/courier/getting-started) to learn how to start building your first project.
+</Info>
+
+## Using Firefox with Courier
+
+If you use Firefox for local development with `courier dev`, you need to install **NSS** (Network Security Services).
+
+NSS is a set of libraries designed to support cross-platform development of security-enabled client and server applications.
+
+### Install NSS on Linux
+
+Use the package manager that applies to your system:
+
+<CodeGroup>
+
+```bash Debian/Ubuntu
+apt install libnss3-tools
+```
+
+```bash Fedora/CentOS/RHEL
+yum install nss-tools
+```
+
+```bash openSUSE/SUSE
+zypper install mozilla-nss-tools
+```
+
+</CodeGroup>
+
+After installation, `courier dev` will work properly with Firefox.
+
+## Troubleshooting
+
+### Package Not Found
+
+If the installation fails with a "package not found" error:
+
+1. Verify you downloaded the correct package for your architecture (usually `amd64`)
+2. Check that the file path is correct
+3. Ensure you have sudo privileges
+
+### Permission Denied
+
+If you see "permission denied" errors:
+
+```bash
+sudo chmod +x ./courier_*_linux_amd64.deb
+sudo apt install ./courier_*_linux_amd64.deb
+```
+
+### Dependency Issues
+
+If there are dependency conflicts:
+
+```bash Debian/Ubuntu
+sudo apt --fix-broken install
+```
+
+```bash Fedora
+sudo dnf install --skip-broken
+```
+
+### Command Not Found
+
+If the `courier` command isn't recognized after installation:
+
+1. Close and reopen your terminal
+2. Verify the installation:
+   ```bash
+   which courier
+   ```
+3. Check your PATH:
+   ```bash
+   echo $PATH
+   ```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Getting Started" href="/courier/getting-started">
+    Learn how to use Courier with your first project
+  </Card>
+  
+  <Card title="Courier Commands" href="/courier/commands">
+    Explore all available Courier commands
+  </Card>
+  
+  <Card title="Create a Project" href="/quickstart">
+    Follow the quickstart guide
+  </Card>
+  
+  <Card title="Cassettes" href="/core-concepts/cassettes">
+    Learn about managing multiple site versions
+  </Card>
+</CardGroup>

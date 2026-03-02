@@ -1,0 +1,111 @@
+---
+title: Filters
+description: Modify and transform variables using Canvas filters.
+---
+
+Variables can be modified by **filters**. Filters are separated from the variable by a pipe symbol (`|`). Multiple filters can be chained. The output of one filter is applied to the next.
+
+The following example removes all HTML tags from the `name` and title-cases it:
+
+```canvas
+{{ name | striptags | title }}
+```
+
+Filters that accept arguments have parentheses around the arguments. This example joins the elements of a list by commas:
+
+```canvas
+{{ list | join(', ') }}
+```
+
+To apply a filter on a section of code, wrap it with the [apply](/canvas/tags/apply) tag:
+
+```canvas
+{% apply upper %}
+  This text becomes uppercase
+{% endapply %}
+```
+
+## Available filters
+
+Canvas provides a comprehensive set of filters for transforming and formatting data:
+
+### String filters
+
+- [capitalize](/canvas/filters/overview#capitalize) - Capitalize the first character
+- [escape](/canvas/filters/overview#escape) - Escape HTML entities
+- [lower](/canvas/filters/overview#lower) - Convert to lowercase
+- [upper](/canvas/filters/overview#upper) - Convert to uppercase
+- [title](/canvas/filters/overview#title) - Convert to title case
+- [trim](/canvas/filters/overview#trim) - Remove whitespace
+- [nl2br](/canvas/filters/overview#nl2br) - Convert newlines to `<br>` tags
+- [striptags](/canvas/filters/overview#striptags) - Strip HTML tags
+- [slug](/canvas/filters/overview#slug) - Generate URL-friendly slug
+- [format](/canvas/filters/overview#format) - String formatting
+- [replace](/canvas/filters/overview#replace) - Replace text
+- [split](/canvas/filters/overview#split) - Split string into array
+- [url_encode](/canvas/filters/overview#url_encode) - URL encode string
+- [convert_encoding](/canvas/filters/overview#convert_encoding) - Convert character encoding
+- [raw](/canvas/filters/overview#raw) - Mark value as safe (no escaping)
+
+### Array filters
+
+- [batch](/canvas/filters/overview#batch) - Batch items into groups
+- [column](/canvas/filters/overview#column) - Extract column from array
+- [first](/canvas/filters/overview#first) - Get first element
+- [last](/canvas/filters/overview#last) - Get last element
+- [join](/canvas/filters/overview#join) - Join array elements
+- [keys](/canvas/filters/overview#keys) - Get array keys
+- [length](/canvas/filters/overview#length) - Get length of array or string
+- [map](/canvas/filters/overview#map) - Apply arrow function to array
+- [merge](/canvas/filters/overview#merge) - Merge arrays
+- [reduce](/canvas/filters/overview#reduce) - Reduce array to single value
+- [reverse](/canvas/filters/overview#reverse) - Reverse array order
+- [slice](/canvas/filters/overview#slice) - Extract slice of array
+- [sort](/canvas/filters/overview#sort) - Sort array
+- [group_by](/canvas/filters/overview#group_by) - Group array by property
+- [filter](/canvas/filters/overview#filter) - Filter array elements
+
+### Number filters
+
+- [abs](/canvas/filters/overview#abs) - Absolute value
+- [number_format](/canvas/filters/overview#number_format) - Format numbers
+- [round](/canvas/filters/overview#round) - Round numbers
+
+### Date filters
+
+- [date](/canvas/filters/overview#date) - Format dates
+- [date_modify](/canvas/filters/overview#date_modify) - Modify dates
+
+### Utility filters
+
+- [default](/canvas/filters/overview#default) - Set default value
+- [json_encode](/canvas/filters/overview#json_encode) - Encode as JSON
+- [spaceless](/canvas/filters/overview#spaceless) - Remove whitespace between HTML tags
+- [reading_time](/canvas/filters/overview#reading_time) - Calculate reading time
+
+### Image filters
+
+- [image_tag](/canvas/filters/overview#image_tag) - Generate image tag
+- [image_url](/canvas/filters/overview#image_url) - Generate image URL with transformations
+
+## Named arguments
+
+Using named arguments makes your templates more explicit about the meaning of the values you pass:
+
+```canvas
+{{ data | convert_encoding('UTF-8', 'iso-2022-jp') }}
+
+{# versus #}
+
+{{ data | convert_encoding(from = 'iso-2022-jp', to = 'UTF-8') }}
+```
+
+Named arguments also allow you to skip some arguments for which you don't want to change the default value:
+
+```canvas
+{# the first argument is the date format, which defaults to the global date format if null is passed #}
+{{ 'now' | date(null, 'Europe/Paris') }}
+
+{# or skip the format value by using a named argument for the time zone #}
+{{ 'now' | date(timezone = 'Europe/Paris') }}
+```

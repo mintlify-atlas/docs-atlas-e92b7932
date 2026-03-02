@@ -1,0 +1,211 @@
+---
+title: 'Pages'
+description: 'Manage pages for your project'
+api: 'GET https://{handle}.blutui.com/admin/api/pages'
+---
+
+## List all pages
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+<ParamField query="expand" type="string[]">
+  Expand the response for the given items. Expand array accepts `list`.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.pages.list()
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/pages' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseField name="object" type="string">
+  This will always contain `list` for this endpoint.
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  An array of up to `limit` page resources. If no pages are available, an empty array is returned.
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Additional information about the list.
+</ResponseField>
+
+---
+
+## Create page
+
+<api>POST https://{handle}.blutui.com/admin/api/pages</api>
+
+<ParamField body="name" type="string" required>
+  The name of the page.
+</ParamField>
+
+<ParamField body="uri" type="string" required>
+  The URL used to access this page.
+</ParamField>
+
+<ParamField body="title" type="string">
+  The title of this page.
+</ParamField>
+
+<ParamField body="description" type="string">
+  The description of this page.
+</ParamField>
+
+<ParamField body="layout" type="string">
+  The layout used to display this page.
+</ParamField>
+
+<ParamField body="active" type="boolean">
+  Whether the page is active or not.
+</ParamField>
+
+<ParamField body="publish_date" type="string">
+  The date and time when this page will be published.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.pages.create({
+  name: 'Home',
+  uri: '/',
+})
+```
+
+```bash cURL
+curl -X POST 'https://{handle}.blutui.com/admin/api/pages' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "name": "Home",
+  "uri": "/"
+}'
+```
+</CodeGroup>
+
+---
+
+## Retrieve page
+
+<api>GET https://{handle}.blutui.com/admin/api/pages/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the page to retrieve.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.pages.get('page-id')
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/pages/page-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Update page
+
+<api>PATCH https://{handle}.blutui.com/admin/api/pages/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the page to update.
+</ParamField>
+
+<ParamField body="name" type="string">
+  The name of the page.
+</ParamField>
+
+<ParamField body="uri" type="string">
+  The URL used to access this page.
+</ParamField>
+
+<ParamField body="title" type="string">
+  The title of this page.
+</ParamField>
+
+<ParamField body="description" type="string">
+  The description of this page.
+</ParamField>
+
+<ParamField body="layout" type="string">
+  The layout used to display this page.
+</ParamField>
+
+<ParamField body="active" type="boolean">
+  Whether the page is active or not.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.pages.update('page-id', {
+  name: 'Updated Home',
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://{handle}.blutui.com/admin/api/pages/page-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "name": "Updated Home"
+}'
+```
+</CodeGroup>
+
+---
+
+## Remove page
+
+<api>DELETE https://{handle}.blutui.com/admin/api/pages/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the page to remove.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.pages.remove('page-id')
+```
+
+```bash cURL
+curl -X DELETE 'https://{handle}.blutui.com/admin/api/pages/page-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>

@@ -1,122 +1,318 @@
 {
   "$schema": "https://mintlify.com/docs.json",
+  "name": "Blutui",
   "theme": "mint",
-  "name": "Mint Starter Kit",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#4F46E5",
+    "light": "#818CF8",
+    "dark": "#312E81"
   },
-  "favicon": "/favicon.svg",
+  "navbar": {
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/blutui/docs"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/blutui/docs"
+    }
+  },
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Get Started",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "introduction",
+              "quickstart"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Core Concepts",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "core-concepts/projects",
+              "core-concepts/canopy",
+              "core-concepts/collections",
+              "core-concepts/cassettes"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Courier CLI",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "courier/getting-started",
+              "courier/installation/macos",
+              "courier/installation/windows",
+              "courier/installation/linux",
+              "courier/commands"
             ]
           },
           {
-            "group": "AI tools",
+            "group": "Components",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "components/overview",
+              "components/input-types"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "Canvas Reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Getting Started",
             "pages": [
-              "api-reference/introduction"
+              "canvas/overview",
+              "canvas/syntax"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Tags",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "canvas/tags/apply",
+              "canvas/tags/autoescape",
+              "canvas/tags/block",
+              "canvas/tags/do",
+              "canvas/tags/embed",
+              "canvas/tags/extends",
+              "canvas/tags/for",
+              "canvas/tags/form",
+              "canvas/tags/from",
+              "canvas/tags/if",
+              "canvas/tags/import",
+              "canvas/tags/include",
+              "canvas/tags/macro",
+              "canvas/tags/set",
+              "canvas/tags/use",
+              "canvas/tags/verbatim",
+              "canvas/tags/with"
+            ]
+          },
+          {
+            "group": "Filters",
+            "pages": [
+              "canvas/filters/overview"
+            ]
+          },
+          {
+            "group": "Functions",
+            "pages": [
+              "canvas/functions/overview"
+            ]
+          },
+          {
+            "group": "Canopy Functions",
+            "pages": [
+              "canvas/functions/canopy/cms-text",
+              "canvas/functions/canopy/cms-heading",
+              "canvas/functions/canopy/cms-image",
+              "canvas/functions/canopy/cms-button",
+              "canvas/functions/canopy/cms-code",
+              "canvas/functions/canopy/cms-list"
+            ]
+          },
+          {
+            "group": "Variables",
+            "pages": [
+              "canvas/variables/overview"
+            ]
+          },
+          {
+            "group": "Tests",
+            "pages": [
+              "canvas/tests/overview"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Dashboard",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "dashboard/introduction"
+            ]
+          },
+          {
+            "group": "Content Management",
+            "pages": [
+              "dashboard/pages",
+              "dashboard/blogs",
+              "dashboard/collections",
+              "dashboard/forms",
+              "dashboard/menus",
+              "dashboard/assets"
+            ]
+          },
+          {
+            "group": "Canopy Editor",
+            "pages": [
+              "dashboard/canopy/overview",
+              "dashboard/canopy/edit-text",
+              "dashboard/canopy/edit-heading",
+              "dashboard/canopy/edit-image",
+              "dashboard/canopy/edit-video",
+              "dashboard/canopy/edit-audio",
+              "dashboard/canopy/edit-button",
+              "dashboard/canopy/edit-code",
+              "dashboard/canopy/edit-list"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Console",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "console/introduction"
+            ]
+          },
+          {
+            "group": "Console Basics",
+            "pages": [
+              "console/basics/agency-console",
+              "console/basics/managing-sites",
+              "console/basics/staging-sites",
+              "console/basics/multiple-organisations"
+            ]
+          },
+          {
+            "group": "Building Sites",
+            "pages": [
+              "console/building-sites/workflow"
+            ]
+          },
+          {
+            "group": "Accounts",
+            "pages": [
+              "console/accounts/overview"
+            ]
+          },
+          {
+            "group": "Organisation Settings",
+            "pages": [
+              "console/organisation-settings/overview"
+            ]
+          },
+          {
+            "group": "Site Settings",
+            "pages": [
+              "console/site-settings/overview"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/authentication"
+            ]
+          },
+          {
+            "group": "Admin API",
+            "pages": [
+              "api-reference/admin/overview",
+              "api-reference/admin/blogs",
+              "api-reference/admin/posts",
+              "api-reference/admin/collections",
+              "api-reference/admin/entries",
+              "api-reference/admin/links",
+              "api-reference/admin/forms",
+              "api-reference/admin/submissions",
+              "api-reference/admin/menus",
+              "api-reference/admin/pages",
+              "api-reference/admin/redirects",
+              "api-reference/admin/route-patterns",
+              "api-reference/admin/users",
+              "api-reference/admin/webhooks"
+            ]
+          },
+          {
+            "group": "Console API",
+            "pages": [
+              "api-reference/console/overview",
+              "api-reference/console/brand",
+              "api-reference/console/cassettes",
+              "api-reference/console/domains",
+              "api-reference/console/invites",
+              "api-reference/console/members",
+              "api-reference/console/projects",
+              "api-reference/console/roles"
+            ]
+          },
+          {
+            "group": "Agencies API",
+            "pages": [
+              "api-reference/agencies/overview"
+            ]
+          },
+          {
+            "group": "User API",
+            "pages": [
+              "api-reference/user/overview"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "guides/introduction",
+              "guides/create-project",
+              "guides/deploy-project"
+            ]
+          },
+          {
+            "group": "Project Setup",
+            "pages": [
+              "guides/create-page",
+              "guides/create-layout",
+              "guides/create-blog",
+              "guides/create-form"
+            ]
+          },
+          {
+            "group": "Development Workflow",
+            "pages": [
+              "guides/preview-project-with-courier",
+              "guides/pull-project-with-courier",
+              "guides/push-project-with-courier"
+            ]
+          },
+          {
+            "group": "Advanced Features",
+            "pages": [
+              "guides/use-blutui-ai",
+              "guides/use-blutui-image-optimizer",
+              "guides/use-tailwind-css",
+              "guides/use-package-manager"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "groups": [
+          {
+            "group": "Product Updates",
+            "pages": [
+              "changelog/overview"
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
+    ]
   }
 }

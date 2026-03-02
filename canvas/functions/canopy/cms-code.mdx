@@ -1,0 +1,66 @@
+---
+title: cms_code
+description: Define an editable code component for the Canopy visual editor.
+---
+
+The `cms_code` function is used to define a code component which can be edited on the Canopy editor.
+
+```canvas
+{{ cms_code(name, { value: '...', class: '...' }) }}
+```
+
+## Parameters
+
+<ParamField path="name" type="string" required>
+  The element identifier
+</ParamField>
+
+<ParamField path="value" type="string">
+  The code to be displayed
+</ParamField>
+
+<ParamField path="class" type="string">
+  A space-separated list of CSS classes to style the code component
+</ParamField>
+
+<Note>
+The `class` variable is only accessible in the code. All other variables are available in the Canopy editor.
+</Note>
+
+## Code component template
+
+```canvas
+<code class={{ class }}>
+  <pre>{{ value }}</pre>
+</code>
+```
+
+## Rendered HTML output
+
+```html
+<code class="text-sm">
+  <pre>
+    function greet() {
+        console.log("Hello, World!");
+    }
+    greet();
+  </pre>
+</code>
+```
+
+## Example
+
+```canvas
+{{ cms_code('mycode', { value: 'function greet() {\n    console.log("Hello, World!");\n}\ngreet();', class: 'text-sm' }) }}
+```
+
+```html
+<code class="text-sm">
+  <pre>
+  function greet() {
+      console.log("Hello, World!");
+  }
+  greet();
+  </pre>
+</code>
+```

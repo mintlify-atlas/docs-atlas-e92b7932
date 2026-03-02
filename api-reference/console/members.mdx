@@ -1,0 +1,139 @@
+---
+title: 'Members'
+description: 'Manage team members for your agency'
+api: 'GET https://api.blutui.com/v1/agencies/{username}/members'
+---
+
+## List all members
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').members.list()
+```
+
+```bash cURL
+curl -X GET 'https://api.blutui.com/v1/agencies/studio/members' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseField name="object" type="string">
+  This will always contain `list` for this endpoint.
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  An array of up to `limit` member resources. If no members are available, an empty array is returned.
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Additional information about the list.
+</ResponseField>
+
+---
+
+## Retrieve member
+
+<api>GET https://api.blutui.com/v1/agencies/{username}/members/{id}</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the member to retrieve.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').members.get('member-id')
+```
+
+```bash cURL
+curl -X GET 'https://api.blutui.com/v1/agencies/studio/members/member-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Update member
+
+<api>PATCH https://api.blutui.com/v1/agencies/{username}/members/{id}</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the member to update.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').members.update('member-id', {
+  // update parameters
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://api.blutui.com/v1/agencies/studio/members/member-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Remove member
+
+<api>DELETE https://api.blutui.com/v1/agencies/{username}/members/{id}</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the member to remove.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agency('studio').members.remove('member-id')
+```
+
+```bash cURL
+curl -X DELETE 'https://api.blutui.com/v1/agencies/studio/members/member-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>

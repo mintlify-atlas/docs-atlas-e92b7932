@@ -1,0 +1,215 @@
+---
+title: 'Menus'
+description: 'Manage menus and menu items for your project'
+api: 'GET https://{handle}.blutui.com/admin/api/menus'
+---
+
+## List all menus
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+<ParamField query="expand" type="string[]">
+  Expand the response for the given items. Expand array accepts `list`.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.menus.list()
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/menus' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseField name="object" type="string">
+  This will always contain `list` for this endpoint.
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  An array of up to `limit` menu resources. If no menus are available, an empty array is returned.
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Additional information about the list.
+</ResponseField>
+
+---
+
+## Create menu
+
+<api>POST https://{handle}.blutui.com/admin/api/menus</api>
+
+<ParamField body="name" type="string" required>
+  The name of the menu.
+</ParamField>
+
+<ParamField body="handle" type="string" required>
+  The unique slug of the menu.
+</ParamField>
+
+<ParamField body="items" type="array">
+  The list of items in the menu.
+</ParamField>
+
+<ParamField body="items[].label" type="string" required>
+  The label for the menu item.
+</ParamField>
+
+<ParamField body="items[].url" type="string" required>
+  The URL for the menu item.
+</ParamField>
+
+<ParamField body="items[].active" type="boolean">
+  Whether the menu item is active or not.
+</ParamField>
+
+<ParamField body="items[].is_new_tab" type="boolean">
+  Whether the menu item should open in a new tab or not.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.menus.create({
+  name: 'Primary Menu',
+  handle: 'primary-menu',
+  items: [
+    {
+      label: 'About',
+      url: '/about',
+      isNewTab: false,
+      active: true,
+    },
+  ],
+})
+```
+
+```bash cURL
+curl -X POST 'https://{handle}.blutui.com/admin/api/menus' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "name": "Primary Menu",
+  "handle": "primary-menu",
+  "items": [
+    {
+      "label": "About",
+      "url": "/about",
+      "is_new_tab": false,
+      "active": true
+    }
+  ]
+}'
+```
+</CodeGroup>
+
+---
+
+## Retrieve menu
+
+<api>GET https://{handle}.blutui.com/admin/api/menus/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the menu to retrieve.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.menus.get('menu-id')
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/menus/menu-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Update menu
+
+<api>PATCH https://{handle}.blutui.com/admin/api/menus/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the menu to update.
+</ParamField>
+
+<ParamField body="name" type="string">
+  The name of the menu.
+</ParamField>
+
+<ParamField body="handle" type="string">
+  The unique slug of the menu.
+</ParamField>
+
+<ParamField body="items" type="array">
+  The list of items in the menu.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.menus.update('menu-id', {
+  name: 'Updated Menu',
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://{handle}.blutui.com/admin/api/menus/menu-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "name": "Updated Menu"
+}'
+```
+</CodeGroup>
+
+---
+
+## Remove menu
+
+<api>DELETE https://{handle}.blutui.com/admin/api/menus/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the menu to remove.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.menus.remove('menu-id')
+```
+
+```bash cURL
+curl -X DELETE 'https://{handle}.blutui.com/admin/api/menus/menu-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>

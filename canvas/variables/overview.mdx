@@ -1,0 +1,74 @@
+---
+title: Variables
+description: Access global variables and site information in Canvas templates.
+---
+
+Canvas provides several global variables that are available in all templates. These variables give you access to information about the current request, route, and site settings.
+
+## Available variables
+
+Canvas provides the following global variables:
+
+### request
+
+Get information about the current request.
+
+- `request.hostname` - The hostname of the current request
+- `request.host` - The URL of the current request with the request protocol
+- `request.secure` - If the current request is secure (boolean)
+- `request.original_url` - The original URL of the current request
+- `request.url` - The URL of the current request
+- `request.path` - The path of the current request
+- `request.canonical_url` - The canonical URL of the current request
+- `request.headers` - The headers associated to the current request
+- `request.params` - The URL parameters as key & value pairs
+
+```canvas
+{{ request.hostname }}
+{# outputs 'example.com' #}
+
+{{ request.params }}
+{# outputs: { 'foo': 'bar' } for http://example.com/?foo=bar #}
+```
+
+[Learn more about request variables →](/canvas/variables/request)
+
+### route
+
+Get information about the current route.
+
+- `route.url` - The url of the current page
+- `route.type` - The route type
+
+```canvas
+{{ route.url }}
+{# outputs '/' if the current route is the homepage #}
+
+{{ route.type }}
+{# outputs 'static' if the current route is static #}
+```
+
+[Learn more about route variables →](/canvas/variables/route)
+
+### settings
+
+Get the site settings.
+
+- `settings.site_name` - The name of the current site
+- `settings.site_handle` - The handle of the current site
+- `settings.timezone` - The timezone of the current site
+- `settings.published` - If the current site is published
+- `settings.meta_description` - The meta description of the current site
+- `settings.google_verification_code` - The Google site verification code
+- `settings.code_injection_head` - HTML content injected in the `head` tag
+- `settings.code_injection_header` - HTML content injected at the beginning of the `body` tag
+- `settings.code_injection_footer` - HTML content injected at the end of the `body` tag
+- `settings.forms_recaptcha_key` - reCAPTCHA configuration key
+
+```canvas
+<meta name="description" content="{{ settings.meta_description }}">
+
+<meta name="google-site-verification" content="{{ settings.google_verification_code }}">
+```
+
+[Learn more about settings variables →](/canvas/variables/settings)

@@ -1,0 +1,120 @@
+---
+title: Tests
+description: Test variables against common expressions using Canvas tests.
+---
+
+The `is` operator performs tests. Tests can be used to test a variable against a common expression. The right operand is name of the test:
+
+```canvas
+{# find out if a variable is odd #}
+{{ name is odd }}
+```
+
+Tests can accept arguments too:
+
+```canvas
+{% if post.status is constant('Post::PUBLISHED') %}
+```
+
+Tests can be negated by using the `is not` operator:
+
+```canvas
+{% if post.status is not constant('Post::PUBLISHED') %}
+
+{# is equivalent to #}
+{% if not (post.status is constant('Post::PUBLISHED')) %}
+```
+
+## Available tests
+
+Canvas provides the following tests:
+
+### constant
+
+Check if a variable is the same as a constant.
+
+```canvas
+{% if post.status is constant('Post::PUBLISHED') %}
+```
+
+### defined
+
+Check if a variable is defined.
+
+```canvas
+{% if users is defined %}
+  {# users variable is defined #}
+{% endif %}
+```
+
+### divisible by
+
+Check if a variable is divisible by a number.
+
+```canvas
+{% if loop.index is divisible by(3) %}
+  {# do something every 3rd iteration #}
+{% endif %}
+```
+
+### empty
+
+Check if a variable is empty.
+
+```canvas
+{% if users is empty %}
+  {# users is empty #}
+{% endif %}
+```
+
+### even
+
+Check if a number is even.
+
+```canvas
+{{ var is even }}
+```
+
+### iterable
+
+Check if a variable is iterable (array or object).
+
+```canvas
+{% if users is iterable %}
+  {% for user in users %}
+    {{ user }}
+  {% endfor %}
+{% endif %}
+```
+
+### null
+
+Check if a variable is null.
+
+```canvas
+{{ var is null }}
+```
+
+<Note>
+**none** is an alias for **null**.
+</Note>
+
+[Learn more about null test →](/canvas/tests/null)
+
+### odd
+
+Check if a number is odd.
+
+```canvas
+{{ var is odd }}
+```
+
+### same as
+
+Check if a variable is the same as another variable (identity check).
+
+```canvas
+{% if foo is same as(bar) %}
+  {# foo and bar are the same #}
+{% endif %}
+```

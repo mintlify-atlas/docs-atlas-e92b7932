@@ -1,0 +1,54 @@
+---
+title: cms_text
+description: Define an editable text component for the Canopy visual editor.
+---
+
+The `cms_text` function is used to define a text component which can be edited on the Canopy editor.
+
+```canvas
+{{ cms_text(name, { value: '...', class: '...' }) }}
+```
+
+## Parameters
+
+<ParamField path="name" type="string" required>
+  The element identifier
+</ParamField>
+
+<ParamField path="value" type="string">
+  The text content to be displayed within the text component
+</ParamField>
+
+<ParamField path="class" type="string">
+  A space-separated list of CSS classes to style the text component
+</ParamField>
+
+<Note>
+The `class` variable is only accessible in the code. All other variables are available in the Canopy editor.
+</Note>
+
+## Text component template
+
+```canvas
+<div class={{ class }}>
+    {{ value }}
+</div>
+```
+
+## Rendered HTML output
+
+```html
+<div class="text-purple-500">String passed in value</div>
+```
+
+## Example
+
+```canvas
+{{ cms_text('mytextcontent', { value: 'Blutui is pro-developer in everything we do', class: 'font-medium text-purple-500' }) }}
+```
+
+```html
+<div class="font-medium text-purple-500">
+  Blutui is pro-developer in everything we do
+</div>
+```

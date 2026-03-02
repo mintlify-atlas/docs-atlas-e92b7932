@@ -1,0 +1,56 @@
+---
+title: cms_heading
+description: Define an editable heading component for the Canopy visual editor.
+---
+
+The `cms_heading` function is used to define a heading component which can be edited on the Canopy editor.
+
+```canvas
+{{ cms_heading(name, { element: '...', value: '...', class: '...' }) }}
+```
+
+## Parameters
+
+<ParamField path="name" type="string" required>
+  The element identifier
+</ParamField>
+
+<ParamField path="element" type="string">
+  The HTML element type of the heading **(h1, h2, h3, h4, h5, or h6)**
+</ParamField>
+
+<ParamField path="value" type="string">
+  The text content to be displayed within the heading
+</ParamField>
+
+<ParamField path="class" type="string">
+  A space-separated list of CSS classes to style the heading component
+</ParamField>
+
+<Note>
+The `class` variable is only accessible in the code. All other variables are available in the Canopy editor.
+</Note>
+
+## Heading component template
+
+```canvas
+<{{ element }} class="{{class}}">
+  {{ value }}
+</{{ element }}>
+```
+
+## Rendered HTML output
+
+```html
+<h2 class="bg-white">String passed in value</h2>
+```
+
+## Example
+
+```canvas
+{{ cms_heading('myheading', { element: 'h3', value: 'Welcome to our page', class: 'text-blue-500 font-bold' }) }}
+```
+
+```html
+<h3 class="font-bold text-blue-500">Welcome to our page</h3>
+```

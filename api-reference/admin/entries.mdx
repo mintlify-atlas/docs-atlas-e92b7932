@@ -1,0 +1,213 @@
+---
+title: 'Entries'
+description: 'Manage collection entries for your project'
+api: 'GET https://{handle}.blutui.com/admin/api/collections/{collection_id}/entries'
+---
+
+## List all entries
+
+<ParamField path="collection_id" type="string" required>
+  The ID of the collection.
+</ParamField>
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+<ParamField query="expand" type="string[]">
+  Expand the response for the given items. Expand array accepts `list`.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.entries.list('collection-id')
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/collections/collection-id/entries' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseField name="object" type="string">
+  This will always contain `list` for this endpoint.
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  An array of up to `limit` collection entry resources. If no collection entries are available, an empty array is returned.
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Additional information about the list.
+</ResponseField>
+
+---
+
+## Create entry
+
+<api>POST https://{handle}.blutui.com/admin/api/collections/{collection_id}/entries</api>
+
+<ParamField path="collection_id" type="string" required>
+  The ID of the collection.
+</ParamField>
+
+<ParamField body="*" type="any" required>
+  The key/value pair of a collection field.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.entries.create('collection-id', {
+  title: 'Black Chair',
+})
+```
+
+```bash cURL
+curl -X POST 'https://{handle}.blutui.com/admin/api/collections/collection-id/entries' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "title": "Black Chair"
+}'
+```
+</CodeGroup>
+
+<ResponseField name="id" type="string">
+  The unique identifier for this collection entry.
+</ResponseField>
+
+<ResponseField name="object" type="string">
+  This will always contain `collection_entry` for this endpoint.
+</ResponseField>
+
+<ResponseField name="*" type="any">
+  The key/value pair of a collection field.
+</ResponseField>
+
+<ResponseField name="collection" type="string | object">
+  The ID of the collection this post belongs to.
+</ResponseField>
+
+<ResponseField name="foreign_keys" type="array">
+  A list of foreign keys for the collection entry.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  The date and time when the entry was created.
+</ResponseField>
+
+<ResponseField name="updated_at" type="string">
+  The date and time when the entry was updated.
+</ResponseField>
+
+---
+
+## Retrieve entry
+
+<api>GET https://{handle}.blutui.com/admin/api/collections/{collection_id}/entries/{id}</api>
+
+<ParamField path="collection_id" type="string" required>
+  The ID of the collection.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the entry to retrieve.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.entries.get('collection-id', 'entry-id')
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/collections/collection-id/entries/entry-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Update entry
+
+<api>PATCH https://{handle}.blutui.com/admin/api/collections/{collection_id}/entries/{id}</api>
+
+<ParamField path="collection_id" type="string" required>
+  The ID of the collection.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the entry to update.
+</ParamField>
+
+<ParamField body="*" type="any">
+  The key/value pair of a collection field.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.entries.update('collection-id', 'entry-id', {
+  title: 'Updated Chair',
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://{handle}.blutui.com/admin/api/collections/collection-id/entries/entry-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "title": "Updated Chair"
+}'
+```
+</CodeGroup>
+
+---
+
+## Remove entry
+
+<api>DELETE https://{handle}.blutui.com/admin/api/collections/{collection_id}/entries/{id}</api>
+
+<ParamField path="collection_id" type="string" required>
+  The ID of the collection.
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  The ID of the entry to remove.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.entries.remove('collection-id', 'entry-id')
+```
+
+```bash cURL
+curl -X DELETE 'https://{handle}.blutui.com/admin/api/collections/collection-id/entries/entry-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>

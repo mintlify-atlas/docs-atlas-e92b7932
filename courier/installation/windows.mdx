@@ -1,0 +1,195 @@
+---
+title: Install Courier on Windows
+description: Install Blutui Courier CLI on Windows using Scoop
+---
+
+Courier is available for Windows via [Scoop](https://scoop.sh/), a command-line installer for Windows.
+
+## Prerequisites
+
+<Warning>
+Git is required to install Scoop buckets. Make sure Git is installed before proceeding.
+</Warning>
+
+If you don't have Git installed:
+
+1. Download from [git-scm.com](https://git-scm.com/download/win)
+2. Run the installer
+3. Follow the installation wizard
+
+## Installation
+
+<Steps>
+
+<Step title="Install Scoop (if needed)">
+
+If you don't have Scoop installed, open PowerShell and run:
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+irm get.scoop.sh | iex
+```
+
+<Info>
+For detailed Scoop installation instructions, visit [scoop.sh](https://scoop.sh/).
+</Info>
+
+</Step>
+
+<Step title="Add Blutui Bucket">
+
+Add the Blutui Scoop bucket:
+
+```bash
+scoop bucket add blutui https://github.com/blutui/bucket-courier.git
+```
+
+</Step>
+
+<Step title="Install Courier">
+
+Install Courier:
+
+```bash
+scoop install blutui/courier
+```
+
+</Step>
+
+</Steps>
+
+## Create a Courier Token
+
+Before using Courier, you need to generate a Blutui access token:
+
+<Steps>
+
+<Step title="Access Your Profile">
+
+1. Login to your [Agency Console](https://console.blutui.com)
+2. Click your avatar in the top-right corner
+3. Choose **Edit my profile**
+
+</Step>
+
+<Step title="Navigate to Apps">
+
+Go to the **Apps** section in the sidebar.
+
+</Step>
+
+<Step title="Create Token">
+
+1. Click **Create token** under "Access tokens"
+2. Name your token (e.g., "Work Laptop")
+3. Set the token type to **Courier**
+4. Click **Create token**
+
+<Warning>
+Your token will only be displayed once. Copy and store it securely.
+</Warning>
+
+</Step>
+
+<Step title="Login to Courier">
+
+Create a temporary file with your access token and login:
+
+```bash
+echo your-token-here > token.txt
+courier login --token < token.txt
+del token.txt
+```
+
+</Step>
+
+</Steps>
+
+Once configured, you're ready to start pushing and pulling projects.
+
+<Info>
+Complete the [getting started guide](/courier/getting-started) to learn how to start building your first project.
+</Info>
+
+## Upgrade Courier
+
+To upgrade to the latest version of Courier:
+
+```bash
+scoop update courier
+```
+
+<Note>
+Regularly updating ensures you have the latest features and bug fixes.
+</Note>
+
+## Verify Installation
+
+Check that Courier is installed correctly:
+
+```bash
+courier version
+```
+
+This should display the current version of Courier.
+
+## Troubleshooting
+
+### Git Not Found
+
+If you see an error about Git not being installed:
+
+1. Install Git from [git-scm.com](https://git-scm.com/download/win)
+2. Restart your terminal
+3. Try adding the Blutui bucket again
+
+### Scoop Not Recognized
+
+If PowerShell doesn't recognize the `scoop` command:
+
+1. Close and reopen PowerShell
+2. Verify Scoop is in your PATH:
+   ```powershell
+   $env:PATH
+   ```
+3. Reinstall Scoop if necessary
+
+### Permission Errors
+
+If you encounter permission errors:
+
+1. Run PowerShell as Administrator
+2. Set the execution policy:
+   ```powershell
+   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+   ```
+3. Try the installation again
+
+### Bucket Already Exists
+
+If the Blutui bucket is already added:
+
+```bash
+scoop bucket rm blutui
+scoop bucket add blutui https://github.com/blutui/bucket-courier.git
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Getting Started" href="/courier/getting-started">
+    Learn how to use Courier with your first project
+  </Card>
+  
+  <Card title="Courier Commands" href="/courier/commands">
+    Explore all available Courier commands
+  </Card>
+  
+  <Card title="Create a Project" href="/quickstart">
+    Follow the quickstart guide
+  </Card>
+  
+  <Card title="Cassettes" href="/core-concepts/cassettes">
+    Learn about managing multiple site versions
+  </Card>
+</CardGroup>

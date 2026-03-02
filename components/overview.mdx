@@ -1,0 +1,318 @@
+---
+title: Blutui Components Overview
+description: Learn about AI-powered components and how to supercharge your website development with Blutui
+---
+
+Blutui's AI Components can supercharge your website development by generating pre-built sections like headers, footers, galleries, hero sections, and more.
+
+## What are Blutui AI Components?
+
+Blutui AI Components is an AI-powered tool that helps you generate Canvas template code for common website sections. Instead of writing code from scratch, you can describe what you need and let the AI generate the code for you.
+
+<Warning>
+Blutui AI Components can occasionally produce code with errors. While we've minimized this risk, always ensure the generated code functions as intended within your project.
+</Warning>
+
+## How to Access Blutui AI Components
+
+<Steps>
+
+<Step title="Login">
+
+Go to [blutui.ai](https://blutui.ai) and log in using your existing Blutui credentials.
+
+</Step>
+
+<Step title="Select Your Agency">
+
+From the **Agency dropdown** in the top-left section of the dashboard, select the appropriate agency.
+
+</Step>
+
+<Step title="Open a Project">
+
+Click on your specific project to enter the workspace and begin generating components.
+
+</Step>
+
+</Steps>
+
+## Best Practices
+
+### 1. Focus on Components, Not Full Pages
+
+Blutui AI Components excels at creating individual website components. While the tool can generate entire pages, we recommend starting with components and building out the page section-by-section.
+
+This modular approach provides:
+- **Easier debugging** - Isolate issues to specific components
+- **Effortless reuse** - Use components across multiple pages
+- **Precise control** - Fine-tune individual sections
+- **Better maintainability** - Update components independently
+
+**Example prompt:**
+```
+Create an our team section component
+```
+
+### 2. Leverage Canopy for Effortless Editing
+
+While the AI tool can populate components with text and images, using Canopy is a faster and more efficient way to add or edit content.
+
+**Workflow:**
+
+1. Generate the component structure with AI
+2. Add Canopy elements for editable content
+3. Edit content through the [Canopy editor](/core-concepts/canopy)
+
+<Info>
+Content editors can manage text and images through Canopy without touching code.
+</Info>
+
+### 3. Specificity is Key for Styling
+
+The more detailed you are about your styling needs, the better the AI can tailor the generated code to your exact vision.
+
+**Be verbose and specific:**
+
+```
+Create a page component which is a hero section that has a faded-out 
+background, we have text and buttons on the left side and 2 images on 
+the right with slight offset at the top on where the image starts the 
+2 images are https://cdn.blutui.com/uploads/stride_echoes/rc-1.webp and 
+https://cdn.blutui.com/uploads/stride_echoes/rc-2.webp. I want the text 
+to be old-time roman as title and serif for everything else. Make the 
+text black and the buttons black with white text and no roundness, Make 
+the layout a grid-based where the text side takes 2 columns and the 
+images take 1 column each and have a gap between.
+```
+
+<Note>
+Don't need a whole component in one prompt? Simply iterate over your chat and regenerate the code.
+</Note>
+
+## Common Component Types
+
+Blutui AI Components can generate various types of sections:
+
+### Navigation Components
+- Headers with navigation menus
+- Sticky navigation bars
+- Mobile-responsive menus
+- Footer navigation
+
+### Hero Sections
+- Full-width hero banners
+- Split-screen heroes with images
+- Video background heroes
+- Call-to-action sections
+
+### Content Sections
+- Feature grids
+- Testimonial sections
+- Team member displays
+- Pricing tables
+- FAQ accordions
+
+### Gallery Components
+- Image galleries
+- Portfolio grids
+- Product showcases
+- Case study displays
+
+### Forms
+- Contact forms
+- Newsletter signup forms
+- Multi-step forms
+- Search forms
+
+## Integrating Generated Components
+
+### 1. Generate the Component
+
+Use the AI to generate your component code.
+
+### 2. Save to Your Project
+
+Create a new file in `views/components/`:
+
+```bash
+views/components/hero-section.canvas
+```
+
+### 3. Add Canopy Elements
+
+Replace static content with Canopy elements for editability:
+
+```canvas views/components/hero-section.canvas
+<section class="hero">
+  {{ cms_heading('hero-title', {
+    element: 'h1',
+    value: 'Welcome to Our Site',
+    class: 'text-5xl font-bold'
+  }) }}
+  
+  {{ cms_text('hero-description', {
+    value: 'Your description here',
+    class: 'text-lg'
+  }) }}
+  
+  {{ cms_button('hero-cta', {
+    text: 'Get Started',
+    url: '/contact',
+    class: 'btn btn-primary'
+  }) }}
+</section>
+```
+
+### 4. Include in Pages
+
+Include the component in your layouts or pages:
+
+```canvas
+{% include 'components/hero-section.canvas' %}
+```
+
+### 5. Push to Blutui
+
+```bash
+courier push
+```
+
+## Tips for Better Results
+
+### Provide Context
+
+Give the AI context about your project:
+
+```
+I'm building an e-commerce site for organic skincare products. 
+Create a product card component with image, title, price, and 
+add-to-cart button. Use soft, natural colors.
+```
+
+### Specify Frameworks
+
+Mention if you're using specific CSS frameworks:
+
+```
+Create a navigation header using Tailwind CSS classes with a 
+logo on the left and menu items on the right.
+```
+
+### Include Responsive Requirements
+
+```
+Create a three-column feature grid that stacks to single column 
+on mobile devices.
+```
+
+### Request Accessibility Features
+
+```
+Create an image gallery with proper alt text attributes and 
+keyboard navigation support.
+```
+
+## Example Workflow
+
+<Steps>
+
+<Step title="Plan Your Component">
+
+Decide what section you need:
+- Hero section for homepage
+- Team member grid
+- Testimonial slider
+- Contact form
+
+</Step>
+
+<Step title="Write a Detailed Prompt">
+
+```
+Create a team member grid component with 4 columns that displays:
+- Circular profile photo
+- Name (h3)
+- Job title
+- Short bio
+- Social media links (LinkedIn, Twitter)
+Use Tailwind CSS and make it responsive (2 columns on tablet, 1 on mobile)
+```
+
+</Step>
+
+<Step title="Generate and Review">
+
+Let the AI generate the code and review it for:
+- Correct structure
+- Proper class names
+- Responsive design
+- Accessibility
+
+</Step>
+
+<Step title="Add Canopy Integration">
+
+Replace static content with Canopy elements or Collection loops.
+
+</Step>
+
+<Step title="Test Locally">
+
+```bash
+courier dev
+```
+
+Open `https://localhost:8080` and verify the component works.
+
+</Step>
+
+<Step title="Deploy">
+
+```bash
+courier push
+```
+
+</Step>
+
+</Steps>
+
+## Combining AI Components with Collections
+
+For dynamic, repeating content, combine AI-generated components with Collections:
+
+```canvas
+<!-- AI generates the card structure -->
+{% set team = cms.collection('team_members') %}
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+  {% for member in team %}
+    <div class="team-card">
+      <img src="{{ member.photo }}" alt="{{ member.name }}" class="rounded-full" />
+      <h3 class="text-xl font-bold">{{ member.name }}</h3>
+      <p class="text-sm text-gray-500">{{ member.position }}</p>
+      <p>{{ member.bio }}</p>
+    </div>
+  {% endfor %}
+</div>
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Canopy Elements" href="/core-concepts/canopy">
+    Make your components editable with Canopy
+  </Card>
+  
+  <Card title="Collections" href="/core-concepts/collections">
+    Add dynamic, structured data to your components
+  </Card>
+  
+  <Card title="Canvas Templates" href="/canvas/getting-started/overview">
+    Learn the Blutui templating language
+  </Card>
+  
+  <Card title="Input Types" href="/components/input-types">
+    Explore all available field types
+  </Card>
+</CardGroup>

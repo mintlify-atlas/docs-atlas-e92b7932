@@ -1,0 +1,116 @@
+---
+title: 'Agencies API'
+description: 'Manage agencies for the authenticated user'
+api: 'GET https://api.blutui.com/v1/agencies'
+---
+
+## List all agencies
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agencies.list()
+```
+
+```bash cURL
+curl -X GET 'https://api.blutui.com/v1/agencies' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseField name="object" type="string">
+  This will always contain `list` for this endpoint.
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  An array of up to `limit` agency resources. If no agencies are available, an empty array is returned.
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Additional information about the list.
+</ResponseField>
+
+---
+
+## Retrieve agency
+
+<api>GET https://api.blutui.com/v1/agencies/{username}</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agencies.get('studio')
+```
+
+```bash cURL
+curl -X GET 'https://api.blutui.com/v1/agencies/studio' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Update agency
+
+<api>PATCH https://api.blutui.com/v1/agencies/{username}</api>
+
+<ParamField path="username" type="string" required>
+  The agency username.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.agencies.update('studio', {
+  name: 'Updated Agency Name'
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://api.blutui.com/v1/agencies/studio' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+## Related Resources
+
+Once you have an agency, you can manage its resources:
+
+<CardGroup cols={2}>
+  <Card title="Brand" icon="palette" href="/api-reference/console/brand">
+    Configure agency branding
+  </Card>
+  <Card title="Projects" icon="folder" href="/api-reference/console/projects">
+    Manage agency projects
+  </Card>
+  <Card title="Domains" icon="globe" href="/api-reference/console/domains">
+    Configure custom domains
+  </Card>
+  <Card title="Members" icon="users" href="/api-reference/console/members">
+    Manage team members
+  </Card>
+</CardGroup>

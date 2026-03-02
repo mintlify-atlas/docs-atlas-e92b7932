@@ -1,0 +1,457 @@
+---
+title: Input Types Reference
+description: Complete reference for all Canopy elements and Collection field types available in Blutui
+---
+
+This page provides a comprehensive reference for all input types available in Blutui, including Canopy elements for page-specific content and Collection fields for structured data.
+
+## Canopy Elements
+
+Canopy elements are used for page-specific editable content. They are defined in your Canvas templates and edited through the Canopy visual editor.
+
+<Info>
+For detailed information about using Canopy, see the [Canopy documentation](/core-concepts/canopy).
+</Info>
+
+### Text
+
+**Function: `cms_text`**
+
+A text component for displaying editable text content in the Canopy editor.
+
+| Argument | Description | Data Type |
+|:---------|:------------|----------:|
+| `name` | The element identifier | String |
+| `value` (optional) | The text content to be displayed | String |
+| `class` (optional) | Space-separated CSS classes | String |
+
+**Example:**
+
+```canvas
+{{ cms_text('description', {
+  value: 'This is editable text content.',
+  class: 'text-lg text-slate-600'
+}) }}
+```
+
+[View full documentation](/canvas/functions/canopy/cms-text)
+
+### Heading
+
+**Function: `cms_heading`**
+
+A heading component for displaying editable headings (h1-h6) in the Canopy editor.
+
+| Argument | Description | Data Type |
+|:---------|:------------|----------:|
+| `name` | The element identifier | String |
+| `element` (optional) | HTML element type (h1, h2, h3, h4, h5, or h6) | String |
+| `value` (optional) | The text content | String |
+| `class` (optional) | Space-separated CSS classes | String |
+
+**Example:**
+
+```canvas
+{{ cms_heading('page-title', {
+  element: 'h1',
+  value: 'Welcome to Our Site',
+  class: 'text-4xl font-bold'
+}) }}
+```
+
+[View full documentation](/canvas/functions/canopy/cms-heading)
+
+### Image
+
+**Function: `cms_image`**
+
+An image component for displaying editable images in the Canopy editor.
+
+| Argument | Description | Data Type |
+|:---------|:------------|----------:|
+| `name` | The element identifier | String |
+| `url` (optional) | Link to an image | String |
+| `alt_text` (optional) | Descriptive text for accessibility | String |
+| `class` (optional) | Space-separated CSS classes | String |
+
+**Example:**
+
+```canvas
+{{ cms_image('hero-image', {
+  url: 'https://placehold.co/1200x900',
+  alt_text: 'Hero Image',
+  class: 'w-full h-auto object-cover'
+}) }}
+```
+
+[View full documentation](/canvas/functions/canopy/cms-image)
+
+### Button
+
+**Function: `cms_button`**
+
+A button component for creating editable links styled as buttons in the Canopy editor.
+
+| Argument | Description | Data Type |
+|:---------|:------------|----------:|
+| `name` | The element identifier | String |
+| `text` (optional) | The button text | String |
+| `url` (optional) | The button URL | String |
+| `class` (optional) | Space-separated CSS classes | String |
+| `opens_new_tab` (optional) | Open URL in new tab | Boolean |
+
+**Example:**
+
+```canvas
+{{ cms_button('cta-button', {
+  text: 'Get Started',
+  url: '#contact',
+  opens_new_tab: false,
+  class: 'bg-blue-600 text-white px-6 py-3 rounded'
+}) }}
+```
+
+[View full documentation](/canvas/functions/canopy/cms-button)
+
+### List
+
+**Function: `cms_list`**
+
+A list component for creating editable ordered or unordered lists in the Canopy editor.
+
+| Argument | Description | Data Type |
+|:---------|:------------|----------:|
+| `name` | The element identifier | String |
+| `ordered` (optional) | Set ordered or unordered list | Boolean |
+| `items` (optional) | Array of list items | Array[String] |
+| `class` (optional) | Space-separated CSS classes | String |
+
+**Example:**
+
+```canvas
+{{ cms_list('features', {
+  ordered: false,
+  items: ['Feature one', 'Feature two', 'Feature three'],
+  class: 'list-disc ml-6'
+}) }}
+```
+
+[View full documentation](/canvas/functions/canopy/cms-list)
+
+### Quote
+
+**Function: `cms_quote`**
+
+A quote component for displaying editable blockquotes in the Canopy editor.
+
+| Argument | Description | Data Type |
+|:---------|:------------|----------:|
+| `name` | The element identifier | String |
+| `value` (optional) | The text content of the quotation | String |
+| `cite` (optional) | Reference information (author, source, etc.) | String |
+| `class` (optional) | Space-separated CSS classes | String |
+
+**Example:**
+
+```canvas
+{{ cms_quote('testimonial', {
+  value: 'This product changed my life!',
+  cite: 'Jane Doe, CEO',
+  class: 'italic border-l-4 pl-4'
+}) }}
+```
+
+[View full documentation](/canvas/functions/overview)
+
+### Code
+
+**Function: `cms_code`**
+
+A code component for displaying editable code blocks in the Canopy editor.
+
+| Argument | Description | Data Type |
+|:---------|:------------|----------:|
+| `name` | The element identifier | String |
+| `value` (optional) | The code to be displayed | String |
+| `class` (optional) | Space-separated CSS classes | String |
+
+**Example:**
+
+```canvas
+{{ cms_code('code-sample', {
+  value: 'console.log("Hello World");',
+  class: 'bg-slate-900 text-white p-4 rounded'
+}) }}
+```
+
+[View full documentation](/canvas/functions/canopy/cms-code)
+
+---
+
+## Collection Fields
+
+Collection fields are used to define structured data schemas that can be reused across multiple entries. They are managed through the Blutui dashboard.
+
+<Info>
+For detailed information about Collections, see the [Collections documentation](/core-concepts/collections).
+</Info>
+
+### Text
+
+**Type: `text`**
+
+A single-line text input for short strings such as names or titles.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Default value (optional) | default_value | Default text if no value provided |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Required (optional) | required | Whether field must be filled out |
+
+### Text Area
+
+**Type: `textarea`**
+
+A multi-line text input for longer strings such as descriptions or biographies.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Default value (optional) | default_value | Default text if no value provided |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Required (optional) | required | Whether field must be filled out |
+
+### Rich Text
+
+**Type: `richtext`**
+
+A rich text content editor that allows for formatted text, links, styling, etc.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Required (optional) | required | Whether field must be filled out |
+
+**Usage in templates:**
+
+```canvas
+{{ entry.content | raw }}
+```
+
+### File
+
+**Type: `file`**
+
+A file upload input for documents, images, or other media.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Allow multiple uploads (optional) | multiple | Upload more than one file |
+| Required (optional) | required | Whether field must be filled out |
+
+### URL
+
+**Type: `url`**
+
+A single-line input specifically for web addresses.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Default value (optional) | default_value | Default text if no value provided |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Required (optional) | required | Whether field must be filled out |
+
+### Email
+
+**Type: `email`**
+
+A single-line input specifically for email addresses.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Default value (optional) | default_value | Default text if no value provided |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Required (optional) | required | Whether field must be filled out |
+
+### Date & Time
+
+**Type: `date-time`**
+
+An input for selecting dates and times.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Default value (optional) | default_value | Default value if none provided |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Required (optional) | required | Whether field must be filled out |
+
+### Date
+
+**Type: `date`**
+
+An input for selecting dates.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Default value (optional) | default_value | Default value if none provided |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Required (optional) | required | Whether field must be filled out |
+
+### Time
+
+**Type: `time`**
+
+An input for selecting times.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Default value (optional) | default_value | Default value if none provided |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Required (optional) | required | Whether field must be filled out |
+
+### Number
+
+**Type: `number`**
+
+An input for numeric values.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Default value (optional) | default_value | Default value if none provided |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Maximum (optional) | maximum | Maximum value allowed |
+| Minimum (optional) | minimum | Minimum value allowed |
+| Step (optional) | step | Increment between valid values |
+| Required (optional) | required | Whether field must be filled out |
+
+### Phone
+
+**Type: `phone`**
+
+A single-line input specifically for phone numbers.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Default value (optional) | default_value | Default value if none provided |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Required (optional) | required | Whether field must be filled out |
+
+### Color
+
+**Type: `color`**
+
+An input for selecting colors.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Default Color (optional) | default_color | Default color if none provided |
+| Required (optional) | required | Whether field must be filled out |
+
+### Select
+
+**Type: `select`**
+
+A dropdown select input with custom options and values.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Options | options | List of options (minimum 2 required) |
+| Required (optional) | required | Whether field must be filled out |
+
+### Radio
+
+**Type: `radio`**
+
+A radio button input with custom options and values.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Options | options | List of options (minimum 2 required) |
+| Required (optional) | required | Whether field must be filled out |
+
+### Checkbox
+
+**Type: `checkbox`**
+
+Checkboxes with custom options and values.
+
+| Argument | Attribute Name | Description |
+|:---------|:---------------|:------------|
+| Display Name | label | Label displayed in the dashboard |
+| Attribute Name | (User defined) | Used in code to reference this field |
+| Help text (optional) | help_text | Instructions displayed below the field |
+| Options | options | List of options (minimum 2 required) |
+| Required (optional) | required | Whether field must be filled out |
+
+---
+
+## When to Use Each Type
+
+### Use Canopy Elements When:
+
+- Content is page-specific
+- You need visual on-page editing
+- Content doesn't repeat across pages
+- Editors prefer in-context editing
+
+**Examples:** Hero headings, page descriptions, call-to-action buttons
+
+### Use Collection Fields When:
+
+- Content is reusable across pages
+- You need multiple entries of the same structure
+- Content requires complex schemas
+- You want centralized content management
+
+**Examples:** Team members, products, blog posts, testimonials
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Canopy Guide" href="/core-concepts/canopy">
+    Learn how to implement Canopy elements
+  </Card>
+  
+  <Card title="Collections Guide" href="/core-concepts/collections">
+    Master Collections and structured data
+  </Card>
+  
+  <Card title="Canvas Functions" href="/canvas/getting-started/filters-functions">
+    Explore all Canvas template functions
+  </Card>
+  
+  <Card title="Components Overview" href="/components/overview">
+    Use AI to generate components
+  </Card>
+</CardGroup>

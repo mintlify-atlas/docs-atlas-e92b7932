@@ -1,0 +1,207 @@
+---
+title: 'Route Patterns'
+description: 'Manage dynamic route patterns for your project'
+api: 'GET https://{handle}.blutui.com/admin/api/route_patterns'
+---
+
+## List all route patterns
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+<ParamField query="expand" type="string[]">
+  Expand the response for the given items. Expand array accepts `list`.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.routePatterns.list()
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/route_patterns' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseField name="object" type="string">
+  This will always contain `list` for this endpoint.
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  An array of up to `limit` route pattern resources. If no route patterns are available, an empty array is returned.
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Additional information about the list.
+</ResponseField>
+
+---
+
+## Create route pattern
+
+<api>POST https://{handle}.blutui.com/admin/api/route_patterns</api>
+
+<ParamField body="template" type="string" required>
+  The template used to display the resolved route.
+</ParamField>
+
+<ParamField body="pattern" type="array" required>
+  A list of route patterns. Min: 1 pattern.
+</ParamField>
+
+<ParamField body="pattern[].type" type="string" required>
+  The type of route pattern.
+</ParamField>
+
+<ParamField body="pattern[].name" type="string" required>
+  The name of the route pattern.
+</ParamField>
+
+<ParamField body="pattern[].value" type="string | null">
+  The value of the route pattern if any.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.routePatterns.create({
+  template: 'pages/products/product.canvas',
+  pattern: [
+    {
+      type: 'string',
+      value: 'products',
+      name: 'products',
+    },
+    {
+      type: 'slug',
+      name: 'slug',
+    },
+  ],
+})
+```
+
+```bash cURL
+curl -X POST 'https://{handle}.blutui.com/admin/api/route_patterns' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "template": "pages/products/product.canvas",
+  "pattern": [
+    {
+      "type": "string",
+      "value": "products",
+      "name": "products"
+    },
+    {
+      "type": "slug",
+      "name": "slug"
+    }
+  ]
+}'
+```
+</CodeGroup>
+
+---
+
+## Retrieve route pattern
+
+<api>GET https://{handle}.blutui.com/admin/api/route_patterns/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the route pattern to retrieve.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.routePatterns.get('route-pattern-id')
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/route_patterns/route-pattern-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Update route pattern
+
+<api>PATCH https://{handle}.blutui.com/admin/api/route_patterns/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the route pattern to update.
+</ParamField>
+
+<ParamField body="template" type="string">
+  The template used to display the resolved route.
+</ParamField>
+
+<ParamField body="pattern" type="array">
+  A list of route patterns.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.routePatterns.update('route-pattern-id', {
+  template: 'pages/products/updated-product.canvas',
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://{handle}.blutui.com/admin/api/route_patterns/route-pattern-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "template": "pages/products/updated-product.canvas"
+}'
+```
+</CodeGroup>
+
+---
+
+## Remove route pattern
+
+<api>DELETE https://{handle}.blutui.com/admin/api/route_patterns/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the route pattern to remove.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.routePatterns.remove('route-pattern-id')
+```
+
+```bash cURL
+curl -X DELETE 'https://{handle}.blutui.com/admin/api/route_patterns/route-pattern-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>

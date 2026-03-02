@@ -1,0 +1,156 @@
+---
+title: Canvas Syntax
+description: Learn the syntax basics, delimiters, variables, and expressions in Canvas templating.
+---
+
+## Delimiters
+
+Canvas uses two types of delimiters:
+
+- `{% ... %}` - Used to execute statements such as control structures (for-loops, if statements, etc.)
+- `{{ ... }}` - Used to output the result of an expression
+- `{# ... #}` - Used for comments (not included in rendered output)
+
+## Variables
+
+Blutui passes variables to the templates for manipulation in the template. Variables may have attributes or elements you can access.
+
+Use a dot (`.`) to access attributes of a variable:
+
+```canvas
+{{ foo.bar }}
+```
+
+<Note>
+The curly braces are not part of the variable but the print statement. When accessing variables inside tags, don't put the braces around them.
+</Note>
+
+If a variable or attribute does not exist, you will receive a **null** value.
+
+If you want to access a dynamic attribute of a variable, use the [attribute](/canvas/functions/overview) function instead. The **attribute** function is also useful when the attribute contains special characters (like **-** that would be interpreted as the minus operator):
+
+```canvas
+{# equivalent to the non-working foo.data-foo #}
+{{ attribute(foo, 'data-foo') }}
+```
+
+### Setting variables
+
+You can assign values to variables inside code blocks. Assignments use the [set](/canvas/tags/set) tag:
+
+```canvas
+{% set foo = 'foo' %}
+{% set foo = [1, 2] %}
+{% set foo = {'foo': 'bar'} %}
+```
+
+## Expressions
+
+Canvas allows expressions everywhere. The operator precedence is as follows, with the lowest-precedence operators listed first: `?:` (ternary operator), `b-and`, `b-xor`, `b-or`, `or`, `and`, `==`, `!=`, `<=>`, `<`, `>`, `>=`, `<=`, `in`, `matches`, `starts with`, `ends with`, `..`, `+`, `-`, `~`, `*`, `/`, `//`, `%`, `is` (tests), `**`, `??`, `|` (filters), `[]`, and `.`
+
+```canvas
+{% set greeting = 'Hello ' %}
+{% set name = 'Fabien' %}
+
+{{ greeting ~ name | lower }} {# Hello fabien #}
+
+{# use parenthesis to change precedence #}
+{{ (greeting ~ name) | lower }} {# hello fabien #}
+```
+
+### Literals
+
+The simplest form of expressions are literals:
+
+- **Strings**: `"Hello World"` - Everything between two double or single quotes is a string
+- **Numbers**: `42` or `42.23` - Integers and floating point numbers
+- **Arrays**: `["foo", "bar"]` - Defined by a sequence of expressions separated by commas
+- **Hashes**: `{"foo": "bar"}` - Defined by a list of keys and values
+- **Booleans**: `true` / `false`
+- **Null**: `null` represents no specific value (`none` is an alias for null)
+
+### Math operators
+
+- `+`: Adds two numbers together
+- `-`: Subtracts the second number from the first one
+- `/`: Divides two numbers (returns float)
+- `%`: Calculates the remainder of an integer division
+- `//`: Divides two numbers and returns the floored integer result
+- `*`: Multiplies the left operand with the right one
+- `**`: Raises the left operand to the power of the right operand
+
+### Logic operators
+
+- `and`: Returns true if both operands are true
+- `or`: Returns true if either operand is true
+- `not`: Negates a statement
+- `(expr)`: Groups an expression
+
+### Comparison operators
+
+- `==`, `!=`, `<`, `>`, `>=`, `<=`
+- `starts with`: Check if a string starts with another string
+- `ends with`: Check if a string ends with another string
+- `matches`: Use regular expressions for complex string comparisons
+
+```canvas
+{% if 'Fabien' starts with 'F' %}
+  ...
+{% endif %}
+
+{% if phone matches '/^[\\d\\.]+$/' %}
+  ...
+{% endif %}
+```
+
+### Other operators
+
+- `|`: Applies a filter
+- `..`: Creates a sequence (e.g., `1..5`)
+- `~`: Concatenates strings
+- `.`, `[]`: Gets an attribute of a variable
+- `?:`: Ternary operator
+- `??`: Null-coalescing operator
+- `in`: Containment test
+- `is`: Test operator
+
+### String interpolation
+
+String interpolation (`#{expression}`) allows any valid expression to appear within a _double-quoted string_:
+
+```canvas
+{{ "foo #{bar} baz" }}
+{{ "foo #{1 + 2} baz" }}
+```
+
+## Comments
+
+To comment-out part of a line in a template, use the comment syntax `{# ... #}`:
+
+```canvas
+{# note: disabled template because we no longer use this
+  {% for user in users %}
+    ...
+  {% endfor %}
+#}
+```
+
+## Whitespace control
+
+The first newline after a template tag is removed automatically. You can also control whitespace on a per tag level using modifiers:
+
+- **`-` modifier**: Removes all whitespace (including newlines)
+- **`~` modifier**: Removes all whitespace (excluding newlines)
+
+```canvas
+{% set value = 'no spaces' %}
+{#- No leading/trailing whitespace -#}
+{%- if true -%}
+  {{- value -}}
+{%- endif -%}
+{# output 'no spaces' #}
+```
+
+<Note>
+Ensure that you run `courier push` after each update, to view your changes in the staging environment.
+</Note>

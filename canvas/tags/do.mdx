@@ -1,0 +1,12 @@
+---
+title: do
+description: Execute expressions without printing output.
+---
+
+The `do` tag works exactly like the regular variable expression (`{{ ... }}`) just that it doesn't print anything:
+
+```canvas
+{% do 1 + 2 %}
+```
+
+This is useful for executing expressions that have side effects without outputting their results.

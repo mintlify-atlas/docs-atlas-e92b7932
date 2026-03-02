@@ -1,0 +1,275 @@
+---
+title: 'Posts'
+description: 'Manage blog posts for your project'
+api: 'GET https://{handle}.blutui.com/admin/api/posts'
+---
+
+## List all posts
+
+<ParamField query="limit" type="integer" default={10}>
+  Limit the number of objects to return, ranging between 1 and 20.
+</ParamField>
+
+<ParamField query="page" type="integer" default={1}>
+  The current page used to display the pagination results.
+</ParamField>
+
+<ParamField query="expand" type="string[]">
+  Expand the response for the given items. Expand array accepts `list`.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.posts.list()
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/posts' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+<ResponseField name="object" type="string">
+  This will always contain `list` for this endpoint.
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  An array of up to `limit` blog post resources. If no blog posts are available, an empty array is returned.
+</ResponseField>
+
+<ResponseField name="meta" type="object">
+  Additional information about the list.
+</ResponseField>
+
+---
+
+## Create post
+
+<api>POST https://{handle}.blutui.com/admin/api/posts</api>
+
+<ParamField body="title" type="string" required>
+  The title for the blog post.
+</ParamField>
+
+<ParamField body="slug" type="string" required>
+  The unique slug for this blog post.
+</ParamField>
+
+<ParamField body="content" type="string" required>
+  The HTML content of the blog post.
+</ParamField>
+
+<ParamField body="author" type="string" required>
+  The author of the blog post.
+</ParamField>
+
+<ParamField body="blog" type="string" required>
+  The ID of the blog this post belongs to.
+</ParamField>
+
+<ParamField body="published_date" type="string" required>
+  The date and time when the blog post will be published.
+</ParamField>
+
+<ParamField body="description" type="string">
+  A short description of the blog post.
+</ParamField>
+
+<ParamField body="feature_image" type="string">
+  The URL of the featured image.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.posts.create({
+  title: 'A very awesome post',
+  slug: '/a-very-awesome-post',
+  content: '<p>My post content</p>',
+  author: 'John Doe',
+  blog: '99e2addd-e8d2-45c3-8184-fbcae8a6cf29',
+  publish_date: '2024/09/25 11:00:00',
+})
+```
+
+```bash cURL
+curl -X POST 'https://{handle}.blutui.com/admin/api/posts' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "title": "A very awesome post",
+  "slug": "/a-very-awesome-post",
+  "content": "<p>My post content</p>",
+  "author": "John Doe",
+  "blog": "99e2addd-e8d2-45c3-8184-fbcae8a6cf29",
+  "publish_date": "2024/09/25 11:00:00"
+}'
+```
+</CodeGroup>
+
+<ResponseField name="id" type="string">
+  The unique identifier for this blog post.
+</ResponseField>
+
+<ResponseField name="object" type="string">
+  This will always contain `post` for this endpoint.
+</ResponseField>
+
+<ResponseField name="title" type="string">
+  The title for the blog post.
+</ResponseField>
+
+<ResponseField name="description" type="string">
+  A short description of the blog post.
+</ResponseField>
+
+<ResponseField name="content" type="string">
+  The HTML content of the blog post.
+</ResponseField>
+
+<ResponseField name="slug" type="string">
+  The unique slug for this blog post.
+</ResponseField>
+
+<ResponseField name="author" type="string">
+  The author of the blog post.
+</ResponseField>
+
+<ResponseField name="feature_image" type="string">
+  The URL of the featured image.
+</ResponseField>
+
+<ResponseField name="blog" type="string | object">
+  The ID of the blog this post belongs to.
+</ResponseField>
+
+<ResponseField name="publish_date" type="string">
+  The date and time when the blog post will be published.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  The date and time when the blog post was created.
+</ResponseField>
+
+<ResponseField name="updated_at" type="string">
+  The date and time when the blog post was updated.
+</ResponseField>
+
+---
+
+## Retrieve post
+
+<api>GET https://{handle}.blutui.com/admin/api/posts/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the post to retrieve.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.posts.get('post-id')
+```
+
+```bash cURL
+curl -X GET 'https://{handle}.blutui.com/admin/api/posts/post-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>
+
+---
+
+## Update post
+
+<api>PATCH https://{handle}.blutui.com/admin/api/posts/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the post to update.
+</ParamField>
+
+<ParamField body="title" type="string">
+  The title for the blog post.
+</ParamField>
+
+<ParamField body="slug" type="string">
+  The unique slug for this blog post.
+</ParamField>
+
+<ParamField body="content" type="string">
+  The HTML content of the blog post.
+</ParamField>
+
+<ParamField body="author" type="string">
+  The author of the blog post.
+</ParamField>
+
+<ParamField body="published_date" type="string">
+  The date and time when the blog post will be published.
+</ParamField>
+
+<ParamField body="description" type="string">
+  A short description of the blog post.
+</ParamField>
+
+<ParamField body="feature_image" type="string">
+  The URL of the featured image.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.posts.update('post-id', {
+  title: 'Updated Title',
+})
+```
+
+```bash cURL
+curl -X PATCH 'https://{handle}.blutui.com/admin/api/posts/post-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+     -d $'{
+  "title": "Updated Title"
+}'
+```
+</CodeGroup>
+
+---
+
+## Remove post
+
+<api>DELETE https://{handle}.blutui.com/admin/api/posts/{id}</api>
+
+<ParamField path="id" type="string" required>
+  The ID of the post to remove.
+</ParamField>
+
+<CodeGroup>
+```typescript Node.js
+import Blutui from 'blutui'
+
+const blutui = new Blutui('ey....')
+
+blutui.project('one').admin.posts.remove('post-id')
+```
+
+```bash cURL
+curl -X DELETE 'https://{handle}.blutui.com/admin/api/posts/post-id' \
+     -H 'Authorization: Bearer ey....' \
+     -H 'Content-Type: application/json'
+```
+</CodeGroup>

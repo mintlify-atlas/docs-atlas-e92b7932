@@ -1,0 +1,445 @@
+---
+title: Courier Commands
+description: Complete reference for all Blutui Courier CLI commands with examples and flags
+---
+
+Courier provides a set of commands to manage your Blutui projects from the command line. All commands include a `-h` flag for detailed help information.
+
+<Info>
+For any command, use the `-h` flag to get more information:
+```bash
+courier [command] -h
+```
+</Info>
+
+## create
+
+Create a new Blutui project using a selected Canvas template in the specified directory.
+
+```bash
+courier create
+```
+
+This interactive command will prompt you to:
+
+1. Enter a project name
+2. Choose a Canvas template (base, tailwindcss, tailwindcss-js, etc.)
+3. Create the project directory with the selected template
+
+### Example
+
+```bash
+$ courier create
+? What is your project name? > my-new-project
+? Which Canvas would you like to use?
+  | tailwindcss-js
+  | Bare bones Canvas with Tailwind CSS + Parcel.js for Blutui.
+
+✔ Success! A new Canvas was created at ./my-new-project
+```
+
+## config
+
+Manage the `courier.json` configuration file in the current working directory.
+
+```bash
+courier config
+```
+
+This command helps you view and modify your project configuration without manually editing the JSON file.
+
+### courier.json Structure
+
+```json courier.json
+{
+  "$schema": "https://dev.blutui.com/schemas/v1/schema.json",
+  "cassette": "main",
+  "handle": "your-project-handle"
+}
+```
+
+## dev
+
+Start a local development environment that hosts your `public` folder, watches for changes in the `views` folder, and automatically syncs to Blutui cloud.
+
+```bash
+courier dev
+```
+
+This command:
+- Hosts your project at `https://localhost:8080`
+- Watches for file changes in `public/` and `views/`
+- Automatically pushes modified files to Blutui
+- Uses Blutui cloud to build and render your pages
+
+<Note>
+On first run, `dev` starts monitoring file changes but does not automatically push existing code. Make a change to a file to trigger the initial sync, or run `courier push` first.
+</Note>
+
+### Example Workflow
+
+```bash
+# Start the dev server
+courier dev
+
+# In another terminal, make changes to your files
+# Courier automatically detects and syncs changes
+
+# Open https://localhost:8080 in your browser
+```
+
+<Info>
+If using Firefox, you may need to install NSS (Network Security Services). See the [installation guides](/courier/installation/macos) for your operating system.
+</Info>
+
+## help
+
+Get help with Blutui Courier commands.
+
+```bash
+courier help
+```
+
+Displays a list of all available commands with brief descriptions.
+
+### Get Help for Specific Commands
+
+```bash
+courier help [command]
+# or
+courier [command] -h
+```
+
+For example:
+
+```bash
+courier help push
+courier push -h
+```
+
+## init
+
+Create a basic `courier.json` configuration file in the current directory for the provided project handle.
+
+```bash
+courier init [project-handle]
+```
+
+### Arguments
+
+- `project-handle` - Your unique project identifier from the Blutui dashboard
+
+### Flags
+
+- `--cassette` - Specify the cassette name (defaults to "main")
+
+### Examples
+
+```bash
+# Initialize with default cassette (main)
+courier init my-project
+
+# Initialize with specific cassette
+courier init my-project --cassette christmas
+```
+
+This creates a `courier.json` file:
+
+```json courier.json
+{
+  "$schema": "https://dev.blutui.com/schemas/v1/schema.json",
+  "cassette": "main",
+  "handle": "my-project"
+}
+```
+
+## login
+
+Log in to Courier using your Blutui access token.
+
+```bash
+courier login --token < token.txt
+```
+
+### Creating a Token
+
+1. Login to [Agency Console](https://console.blutui.com)
+2. Click your avatar → **Edit my profile**
+3. Go to **Apps** → **Access tokens**
+4. Click **Create token**
+5. Name your token and set type to **Courier**
+6. Copy the token (only shown once)
+
+### Login Process
+
+```bash
+# Save token to a file
+echo "your-token-here" > token.txt
+
+# Login using the token file
+courier login --token < token.txt
+
+# Delete the token file for security
+rm token.txt
+```
+
+### Re-login
+
+If your Courier token expires, use the same command to login again.
+
+## open
+
+Open the current project in your default web browser.
+
+```bash
+courier open
+```
+
+This opens your project's staging URL:
+```
+https://[your-project-handle].blutui.com
+```
+
+<Note>
+You must be in a directory with a valid `courier.json` file.
+</Note>
+
+## pull
+
+Pull all site code from Blutui for the project specified in `courier.json`.
+
+```bash
+courier pull
+```
+
+This downloads:
+- All files from the `public/` directory
+- All files from the `views/` directory
+- For the cassette specified in your `courier.json`
+
+### Example
+
+```bash
+# Make sure you're in your project directory
+cd my-project
+
+# Pull the latest code
+courier pull
+
+# Output:
+# Pulling cassette: main
+# Downloaded: public/css/main.css
+# Downloaded: views/layouts/default.canvas
+# ✓ Pull complete
+```
+
+<Warning>
+This will overwrite local files with the versions from Blutui. Commit any local changes before pulling.
+</Warning>
+
+## push
+
+Push all site code to Blutui for the project specified in `courier.json`.
+
+```bash
+courier push
+```
+
+This uploads:
+- All files from the `public/` directory
+- All files from the `views/` directory
+- To the cassette specified in your `courier.json`
+
+### Flags
+
+- `--allow-active` - Allow pushing to the active (live) cassette
+
+### Examples
+
+```bash
+# Standard push to a development cassette
+courier push
+
+# Push to the active cassette (not recommended for production)
+courier push --allow-active
+```
+
+### Active Cassette Warning
+
+If you attempt to push to an active cassette, Courier will warn you:
+
+```bash
+The "main" cassette is currently active. You cannot push to an active cassette.
+
+If you're feeling a little adventurous, use the "--allow-active" flag to bypass this check.
+```
+
+<Warning>
+Pushing to an active cassette means changes immediately affect your live site. Always develop on a separate cassette and thoroughly test before activating.
+</Warning>
+
+<Info>
+This warning doesn't apply to unpublished development projects.
+</Info>
+
+## version
+
+Print the current version of Blutui Courier.
+
+```bash
+courier version
+```
+
+Example output:
+```
+Courier version 2.1.5
+```
+
+## Common Workflows
+
+### Setting Up a New Project
+
+```bash
+# Create project directory
+mkdir my-project
+cd my-project
+
+# Initialize Courier
+courier init my-project
+
+# Pull existing code (if project exists)
+courier pull
+
+# Start development
+courier dev
+```
+
+### Daily Development
+
+```bash
+# Pull latest changes
+courier pull
+
+# Start dev server
+courier dev
+
+# Make your changes...
+# Courier auto-syncs as you work
+
+# Push when ready
+courier push
+```
+
+### Switching Cassettes
+
+```bash
+# Edit courier.json to change cassette
+# Change "cassette": "main" to "cassette": "christmas"
+
+# Pull the new cassette's code
+courier pull
+
+# Make changes
+courier dev
+
+# Push to the cassette
+courier push
+```
+
+### Creating a New Cassette Workflow
+
+<Steps>
+
+<Step title="Duplicate in Dashboard">
+
+1. Open [Agency Console](https://console.blutui.com)
+2. Go to **Cassettes**
+3. Duplicate your current cassette
+4. Name it (e.g., "redesign")
+
+</Step>
+
+<Step title="Update Local Config">
+
+Edit `courier.json`:
+
+```json
+{
+  "$schema": "https://dev.blutui.com/schemas/v1/schema.json",
+  "cassette": "redesign",
+  "handle": "my-project"
+}
+```
+
+</Step>
+
+<Step title="Pull and Develop">
+
+```bash
+courier pull
+courier dev
+```
+
+</Step>
+
+<Step title="Push Changes">
+
+```bash
+courier push
+```
+
+</Step>
+
+<Step title="Activate When Ready">
+
+Activate the cassette in the Agency Console when you're ready to go live.
+
+</Step>
+
+</Steps>
+
+## Troubleshooting Commands
+
+### Check Version
+
+```bash
+courier version
+```
+
+### Verify Configuration
+
+```bash
+courier config
+```
+
+### Test Connection
+
+```bash
+courier open
+```
+
+### Re-authenticate
+
+```bash
+courier login --token < token.txt
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Getting Started" href="/courier/getting-started">
+    Learn the basics of using Courier
+  </Card>
+  
+  <Card title="Projects" href="/core-concepts/projects">
+    Understand Blutui project structure
+  </Card>
+  
+  <Card title="Cassettes" href="/core-concepts/cassettes">
+    Manage multiple site versions
+  </Card>
+  
+  <Card title="Installation" href="/courier/installation/macos">
+    Install Courier on your system
+  </Card>
+</CardGroup>
